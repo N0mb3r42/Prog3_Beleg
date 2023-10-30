@@ -1,4 +1,15 @@
 public class verkaufsAutomat {
+    private int anzahlFaecher;
+    private ObstkuchenImp[] lager;
+
+    public int getAnzahlFaecher() {
+        return anzahlFaecher;
+    }
+
+    public verkaufsAutomat(int anzahlFaecher){
+        this.anzahlFaecher = anzahlFaecher;
+        this.lager = new ObstkuchenImp[anzahlFaecher];
+    }
     public boolean create(ObstkuchenImp input){
         return false;
     }
