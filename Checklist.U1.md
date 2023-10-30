@@ -14,18 +14,18 @@ Flüchtige Quellen, wie Sprachmodelle, sind per screen shot zu dokumentieren.
 1 Punkt für die Erfüllung des Pflichtteils
 
 ### Pflichtteil
-- [ ] Quellen angegeben
+- [x] Quellen angegeben
 - [ ] zip Archiv
 - [x] IntelliJ-Projekt (kein Gradle, Maven o.ä.)
-- [ ] JUnit5 und Mockito als Testframeworks (soweit verwendet)
-- [ ] keine weiteren Bibliotheken außer JavaFX
-- [ ] keine Umlaute, Sonderzeichen, etc. in Datei- und Pfadnamen
+- [x] JUnit5 und Mockito als Testframeworks (soweit verwendet)
+- [x] keine weiteren Bibliotheken außer JavaFX
+- [x] keine Umlaute, Sonderzeichen, etc. in Datei- und Pfadnamen
 - [ ] kompilierbar
-- [ ] Trennung zwischen Test- und Produktiv-Code
+- [x] Trennung zwischen Test- und Produktiv-Code
 - [ ] main-Methoden nur im default package des module belegProg3
 - [ ] ausführbar
 - [x] CRUD für eine Kuchensorte
-- [ ] mindestens ein Test
+- [x] mindestens ein Test
 
 ### empfohlene Realisierungen als Vorbereitung auf den Beleg
 werden überprüft (aber nicht bewertet), wenn hier in der vorgegebenen Reihenfolge als bearbeitet angegeben
