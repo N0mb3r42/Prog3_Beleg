@@ -10,7 +10,16 @@ import java.util.Date;
 public class ObstkuchenImp implements Obstkuchen {
 
     private int Fachnummer;
+
+    public void setInspectionDate(Date inspectionDate) {
+        InspectionDate = inspectionDate;
+    }
+
     private Date InspectionDate;
+
+    public void setFachnummer(int fachnummer) {
+        Fachnummer = fachnummer;
+    }
 
     public ObstkuchenImp(int fachnummer, Date InspectionDate) {
         this.Fachnummer = fachnummer;

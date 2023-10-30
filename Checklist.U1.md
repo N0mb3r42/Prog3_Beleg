@@ -24,7 +24,7 @@ Flüchtige Quellen, wie Sprachmodelle, sind per screen shot zu dokumentieren.
 - [ ] Trennung zwischen Test- und Produktiv-Code
 - [ ] main-Methoden nur im default package des module belegProg3
 - [ ] ausführbar
-- [ ] CRUD für eine Kuchensorte
+- [x] CRUD für eine Kuchensorte
 - [ ] mindestens ein Test
 
 ### empfohlene Realisierungen als Vorbereitung auf den Beleg
