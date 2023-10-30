@@ -17,7 +17,8 @@ public class verkaufsAutomat {
         if (freiersFach == 0)
             return null;
         inputKuchen.setFachnummer(freiersFach);
-        return this.lager.put(freiersFach, inputKuchen);
+        this.lager.put(freiersFach, inputKuchen);
+        return this.lager.get(freiersFach);
     }
     private int findNextFreeSlot(){
         for (int i = 1; i < this.anzahlFaecher; i++){
