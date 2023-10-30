@@ -4,7 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
-class VerkaufsAutomatTest {
+class verkaufsAutomatTest {
     private verkaufsAutomat automat;
     private ObstkuchenImp kuchen;
     @BeforeEach
