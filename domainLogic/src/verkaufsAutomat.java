@@ -8,27 +8,39 @@ public class verkaufsAutomat {
     public int getAnzahlFaecher() {
         return anzahlFaecher;
     }
+
+    public HashMap<Integer, ObstkuchenImp> getLager() {
+        return lager;
+    }
+
     public verkaufsAutomat(int anzahlFaecher){
         this.anzahlFaecher = anzahlFaecher;
         this.lager = new HashMap<Integer, ObstkuchenImp>();
     }
-    public ObstkuchenImp create(ObstkuchenImp inputKuchen){
+    public Boolean create(ObstkuchenImp inputKuchen){
+        if (inputKuchen == null){
+            return false;
+        }
         int freiersFach = this.findNextFreeSlot();
         if (freiersFach == 0)
-            return null;
+            return false;
         inputKuchen.setFachnummer(freiersFach);
         this.lager.put(freiersFach, inputKuchen);
-        return this.lager.get(freiersFach);
+        return true;
     }
     private int findNextFreeSlot(){
-        for (int i = 1; i < this.anzahlFaecher; i++){
+        for (int i = 1; i <= this.anzahlFaecher; i++){
             if (!this.lager.containsKey(i))
                 return i;
         }
         return 0;
     }
-    public ObstkuchenImp delete(int fachnummer){
-        return this.lager.remove(fachnummer);
+    public boolean delete(int fachnummer){
+        if (this.lager.get(fachnummer) == null){
+            return false;
+        }
+        this.lager.remove(fachnummer);
+        return true;
     }
 
     public boolean update(int fachnummer){
@@ -46,4 +58,5 @@ public class verkaufsAutomat {
             return null;
         }
     }
+
 }
