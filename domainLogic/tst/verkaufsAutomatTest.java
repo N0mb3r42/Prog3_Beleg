@@ -64,6 +64,7 @@ class verkaufsAutomatTest {
         assertNotNull(this.automat.read(1)); //Kuchen ist in Fachnummer 1
         Date before = this.automat.read(1).getInspektionsdatum();
         assertTrue(this.automat.update(1)); //wenn Update erfolgreich dann True
+        assertFalse(this.automat.update(2)); // false, wenn Fach ist leer
         Date after = this.automat.read(1).getInspektionsdatum();
         assertNotEquals(before, after); //Inspektionsdatum wurde geändert -> Bei Test auf heutiges Datum, schlägt manchmal fehl, obwohl richtig
         System.out.println("TEST: update WAS SUCCESSFULL");
