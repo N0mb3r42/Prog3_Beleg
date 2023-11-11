@@ -9,12 +9,17 @@ class verkaufsAutomatTest {
     private ObstkuchenImp kuchen;
     private ObstkuchenImp kuchen2;
     private ObstkuchenImp kuchenZuViel;
+    private  Date todayDate;
+    private  Date yesterdayDate;
+
     @BeforeEach
     void setUp() {
         this.automat = new verkaufsAutomat(2);
         this.kuchen = new ObstkuchenImp(-1, new Date());
         this.kuchen2 = new ObstkuchenImp(-1, new Date());
         this.kuchenZuViel = new ObstkuchenImp(-1, new Date());
+        this.todayDate = new Date();
+        this.yesterdayDate = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
     }
 
     @AfterEach
@@ -58,7 +63,7 @@ class verkaufsAutomatTest {
 
     @Test
     void update() {
-        this.kuchen.setInspectionDate(new Date(new Date().getTime() - 24 * 60 * 60 * 1000)); //Set Inspektionsdatum auf gestern, um Änderung sehen zu können
+        this.kuchen.setInspectionDate(this.yesterdayDate); //Set Inspektionsdatum auf gestern, um Änderung sehen zu können
         assertNull(this.automat.read(1)); //wenn verkaufsAutomat erzeugt, dann null für Fachnummer
         assertTrue(this.automat.create(kuchen)); // create Kuchen = True
         assertNotNull(this.automat.read(1)); //Kuchen ist in Fachnummer 1
