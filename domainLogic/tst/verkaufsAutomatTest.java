@@ -47,8 +47,8 @@ class verkaufsAutomatTest {
         assertFalse(this.automat.create(null)); //wenn kuchen==null, dann false
         assertTrue(this.automat.create(this.kuchen2)); //wenn Kuchen eingefügt, dann true
         assertFalse(this.automat.create(this.kuchenZuViel)); //wenn Kapazität erreicht, dann kein Einfügen
-        assertEquals(this.kuchen, this.automat.read(1)); //wenn Kuchen eingefügt, dann Kuchen in Liste
-        assertEquals(this.kuchen2, this.automat.read(2)); //wenn Kuchen eingefügt, dann Kuchen in Liste
+        assertEquals(this.kuchen, this.automat.read().get(1)); //wenn Kuchen eingefügt, dann Kuchen in Liste
+        assertEquals(this.kuchen2, this.automat.read().get(2)); //wenn Kuchen eingefügt, dann Kuchen in Liste
         System.out.println("TEST: create WAS SUCCESSFUL");
 
     }
@@ -60,11 +60,11 @@ class verkaufsAutomatTest {
 
         this.automat.create(this.kuchen);
         assertEquals(1, this.automat.getLager().size()); //wenn ein Kuchen eingefügt, dann Liste Länge +1
-        assertEquals(this.kuchen, this.automat.read(1));//wenn ein Kuchen eingefügt, dann Kuchen in Liste
+        assertEquals(this.kuchen, this.automat.read().get(1));//wenn ein Kuchen eingefügt, dann Kuchen in Liste
 
         assertTrue(this.automat.delete(1)); //wenn ein Kuchen eingefügt, dann entfernen(1) -> true
         assertEquals(0, this.automat.getLager().size()); //wenn ein Kuchen eingefügt und dann entfernt, dann Liste Länge 0
-        assertNull(this.automat.read(1)); //wenn ein Kuchen entfernt, dann dieser Kuchen nicht mehr in Liste
+        assertNull(this.automat.read().get(1)); //wenn ein Kuchen entfernt, dann dieser Kuchen nicht mehr in Liste
 
         System.out.println("TEST: delete WAS SUCCESSFULL");
     }
@@ -72,13 +72,13 @@ class verkaufsAutomatTest {
     @Test
     void update() {
         this.kuchen.setInspectionDate(this.yesterdayDate); //Set Inspektionsdatum auf gestern, um Änderung sehen zu können
-        assertNull(this.automat.read(1)); //wenn verwaltungsImpl.verkaufsAutomat erzeugt, dann null für Fachnummer
+        assertNull(this.automat.read().get(1)); //wenn verwaltungsImpl.verkaufsAutomat erzeugt, dann null für Fachnummer
         assertTrue(this.automat.create(kuchen)); // create Kuchen = True
-        assertNotNull(this.automat.read(1)); //Kuchen ist in Fachnummer 1
-        Date before = this.automat.read(1).getInspektionsdatum();
+        assertNotNull(this.automat.read().get(1)); //Kuchen ist in Fachnummer 1
+        Date before = this.automat.read().get(1).getInspektionsdatum();
         assertTrue(this.automat.update(1)); //wenn Update erfolgreich dann True
         assertFalse(this.automat.update(2)); // false, wenn Fach ist leer
-        Date after = this.automat.read(1).getInspektionsdatum();
+        Date after = this.automat.read().get(1).getInspektionsdatum();
         assertNotEquals(before, after); //Inspektionsdatum wurde geändert -> Bei Test auf heutiges Datum, schlägt manchmal fehl, obwohl richtig
         System.out.println("TEST: update WAS SUCCESSFULL");
     }
@@ -91,8 +91,8 @@ class verkaufsAutomatTest {
         assertTrue(this.automat.create(this.kuchen2)); //wenn Einfügen erfolgreich dann True
         assertFalse(this.automat.create((this.kuchenZuViel)));// wenn maximaler Füllstand erreicht dann False
         assertEquals(this.automat.getAnzahlFaecher(), this.automat.getLager().size()); //wenn maximalie Kuchen eingefügt, dann Liste Länge maxFüllstand
-        assertEquals(this.kuchen, this.automat.read(1));//wenn kuchen eingfügt, dann diese kuchen in liste
-        assertEquals(this.kuchen2, this.automat.read(2));//wenn kuchen eingfügt, dann diese kuchen in liste
+        assertEquals(this.kuchen, this.automat.read().get(1));//wenn kuchen eingfügt, dann diese kuchen in liste
+        assertEquals(this.kuchen2, this.automat.read().get(2));//wenn kuchen eingfügt, dann diese kuchen in liste
         System.out.println("TEST: read WAS SUCCESSFULL");
     }
 }

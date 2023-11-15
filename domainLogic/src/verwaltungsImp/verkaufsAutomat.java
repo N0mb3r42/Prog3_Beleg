@@ -54,12 +54,8 @@ public class verkaufsAutomat {
         kuchen.setInspectionDate(new Date());
         return true;
     }
-    public ObstkuchenImp read(int fachnummer){
-        if(this.lager.get(fachnummer) != null){
-            return this.lager.get(fachnummer);
-        }else {
-            return null;
-        }
+    public HashMap<Integer, ObstkuchenImp> read(){
+        return this.lager;
     }
 
 }

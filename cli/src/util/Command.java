@@ -1,7 +1,7 @@
 package util;
 
 public class Command {
-    public enum Mode{ CREATE,READ,UPDATE,DELETE,PERSISTANCE,NOMODE }
+    public enum Mode{ CREATE,READ,UPDATE,DELETE,PERSISTANCE,NOMODE}
     public Mode mode;
     public Command(){
         this.mode = Mode.NOMODE;
@@ -27,33 +27,11 @@ public class Command {
                     this.mode = Mode.DELETE;
                     System.out.println("Switch to Delete Mode");
                 }
+                case ":e" -> {
+                    this.mode = Mode.NOMODE;
+                }
                 //TODO: Persitance Mode when needed
             }
         }
     }
 }
-
-
-/*
-public enum Operator{ PLUS,MINUS,ERROR }
-    public final Operator operator;
-    public final int number;
-    public Command(String text){
-        String op=text.substring(0,1);
-        int n=0;
-        try { n=Integer.parseInt(text.substring(1)); } catch (NumberFormatException e){ op=""; }
-        switch (op){
-            case "+":
-                this.operator=Operator.PLUS;
-                break;
-            case "-":
-                this.operator=Operator.MINUS;
-                break;
-            default:
-                this.operator=Operator.ERROR;
-                break;
-        }
-        this.number=n;
-    }
-}
- */
