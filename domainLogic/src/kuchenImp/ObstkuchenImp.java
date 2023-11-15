@@ -1,3 +1,5 @@
+package kuchenImp;
+
 import kuchen.Allergen;
 import kuchen.Obstkuchen;
 import verwaltung.Hersteller;

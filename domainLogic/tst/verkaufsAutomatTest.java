@@ -1,6 +1,9 @@
+import kuchenImp.ObstkuchenImp;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import verwaltungsImp.verkaufsAutomat;
+
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,7 +50,7 @@ class verkaufsAutomatTest {
 
     @Test
     void delete() {
-        assertEquals(0, this.automat.getLager().size()); //wenn verkaufsAutomat erzeugt, dann liste leer
+        assertEquals(0, this.automat.getLager().size()); //wenn verwaltungsImpl.verkaufsAutomat erzeugt, dann liste leer
         assertFalse(this.automat.delete(1)); //wenn, nicht vergeben Fachnummer, dann false
 
         this.automat.create(this.kuchen);
@@ -64,7 +67,7 @@ class verkaufsAutomatTest {
     @Test
     void update() {
         this.kuchen.setInspectionDate(this.yesterdayDate); //Set Inspektionsdatum auf gestern, um Änderung sehen zu können
-        assertNull(this.automat.read(1)); //wenn verkaufsAutomat erzeugt, dann null für Fachnummer
+        assertNull(this.automat.read(1)); //wenn verwaltungsImpl.verkaufsAutomat erzeugt, dann null für Fachnummer
         assertTrue(this.automat.create(kuchen)); // create Kuchen = True
         assertNotNull(this.automat.read(1)); //Kuchen ist in Fachnummer 1
         Date before = this.automat.read(1).getInspektionsdatum();
@@ -77,9 +80,9 @@ class verkaufsAutomatTest {
 
     @Test
     void read() {
-        assertEquals(0, this.automat.getLager().size()); //wenn verkaufsAutomat erzeugt, dann liste leer
+        assertEquals(0, this.automat.getLager().size()); //wenn verwaltungsImpl.verkaufsAutomat erzeugt, dann liste leer
         assertTrue(this.automat.create(this.kuchen));// wenn Einfügen erfolgreich dann True
-        assertEquals(1, this.automat.getLager().size()); //wenn verkaufsAutomat erzeugt, dann liste leer
+        assertEquals(1, this.automat.getLager().size()); //wenn verwaltungsImpl.verkaufsAutomat erzeugt, dann liste leer
         assertTrue(this.automat.create(this.kuchen2)); //wenn Einfügen erfolgreich dann True
         assertFalse(this.automat.create((this.kuchenZuViel)));// wenn maximaler Füllstand erreicht dann False
         assertEquals(this.automat.getAnzahlFaecher(), this.automat.getLager().size()); //wenn maximalie Kuchen eingefügt, dann Liste Länge maxFüllstand

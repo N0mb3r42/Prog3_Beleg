@@ -1,12 +1,10 @@
 package util;
 
 public class Command {
-    public enum Mode{ CREATE,READ,UPDATE,DELETE,PERSISTANCE }
+    public enum Mode{ CREATE,READ,UPDATE,DELETE,PERSISTANCE,NOMODE }
     public Mode mode;
-    public String text;
     public Command(){
-        this.mode = null;
-        this.text = "";
+        this.mode = Mode.NOMODE;
     }
 
     public void nextCommand(String text){
@@ -15,29 +13,24 @@ public class Command {
             switch (mod) {
                 case ":c" -> {
                     this.mode = Mode.CREATE;
-                    this.text = text.replace(":c", "");
+                    System.out.println("Switch to Create Mode");
                 }
                 case ":r" -> {
                     this.mode = Mode.READ;
-                    this.text = text.replace(":r", "");
+                    System.out.println("Switch to Read Mode");
                 }
                 case ":u" -> {
                     this.mode = Mode.UPDATE;
-                    this.text = text.replace(":u", "");
+                    System.out.println("Switch to Update Mode");
                 }
                 case ":d" -> {
                     this.mode = Mode.DELETE;
-                    this.text = text.replace(":d", "");
+                    System.out.println("Switch to Delete Mode");
                 }
                 //TODO: Persitance Mode when needed
-                default -> this.text = text;
             }
         }
-
-
-
     }
-
 }
 
 
