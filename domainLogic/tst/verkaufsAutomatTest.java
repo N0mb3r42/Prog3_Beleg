@@ -1,10 +1,15 @@
+import kuchen.Allergen;
 import kuchenImp.ObstkuchenImp;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import verwaltungsImp.HerstellerImp;
 import verwaltungsImp.verkaufsAutomat;
 
+import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.Date;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 class verkaufsAutomatTest {
@@ -18,9 +23,9 @@ class verkaufsAutomatTest {
     @BeforeEach
     void setUp() {
         this.automat = new verkaufsAutomat(2);
-        this.kuchen = new ObstkuchenImp(-1, new Date());
-        this.kuchen2 = new ObstkuchenImp(-1, new Date());
-        this.kuchenZuViel = new ObstkuchenImp(-1, new Date());
+        this.kuchen = new ObstkuchenImp(-1, new Date(), new HerstellerImp("Alice"), new BigDecimal("4.50"), 365, Duration.ofDays(7), Set.of(Allergen.Erdnuss), "Erddbeere");
+        this.kuchen2 = new ObstkuchenImp(-1, new Date(), new HerstellerImp("Alice"), new BigDecimal("4.50"), 365, Duration.ofDays(7),Set.of(Allergen.Erdnuss), "Erddbeere");
+        this.kuchenZuViel = new ObstkuchenImp(-1, new Date(), new HerstellerImp("Alice"), new BigDecimal("4.50"), 365, Duration.ofDays(7),Set.of(Allergen.Erdnuss), "Erddbeere");
         this.todayDate = new Date();
         this.yesterdayDate = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
     }
