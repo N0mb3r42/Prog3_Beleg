@@ -18,7 +18,7 @@ public class Console {
     }
     private List<Allergen> parseAllergene(String[] text){
         List<Allergen> allergene = new ArrayList<>();
-        if (text[0] == ""){
+        if (Objects.equals(text[0], "")){
             return null;
         }
         for (String s : text) {
@@ -31,19 +31,19 @@ public class Console {
         return allergene;
     }
     private void printException(Exception e, Command.Mode mode){
-        switch(mode){
-            case CREATE:
-                System.out.println("Fehlerhafte Eingabe" + e.getMessage());
+        switch (mode) {
+            case CREATE -> {
+                System.out.println("Fehlerhafte Eingabe " + e.getMessage());
                 System.out.println("Input sollte Format: [String] [String] [Decimal] [Integer] [Integer] [String, String] [String] haben");
-                break;
-            case READ:
-                System.out.println("Fehlerhafte Eingabe" + e.getMessage());
+            }
+            case READ -> {
+                System.out.println("Fehlerhafte Eingabe " + e.getMessage());
                 System.out.println("Input sollte entweder 'all' oder [Integer] sein");
-                break;
-            case UPDATE, DELETE:
-                System.out.println("Fehlerhafte Eingabe" + e.getMessage());
+            }
+            case UPDATE, DELETE -> {
+                System.out.println("Fehlerhafte Eingabe " + e.getMessage());
                 System.out.println("Input sollte Format: [integer] haben");
-                break;
+            }
         }
 
     }
@@ -63,38 +63,38 @@ public class Console {
                 }else{
                     String[] cakeData = input.split(" ");
                     switch (c.getMode()) {
-                        case CREATE: //Obstkuchen Alice 4,50 386 36 Gluten,Erdnuss Apfel
-                            if (cakeData.length == 1){
+                        case CREATE -> { //Obstkuchen Alice 4,50 386 36 Gluten,Erdnuss Apfel
+                            if (cakeData.length == 1) {
                                 HerstellerImp hersteller = new HerstellerImp(cakeData[0]);
-                            }else{
-                                try{
+                            } else {
+                                try {
                                     HerstellerImp hersteller = new HerstellerImp(cakeData[1]);
                                     BigDecimal preis = new BigDecimal(cakeData[2].replace(",", "."));
                                     int naehrwert = Integer.parseInt(cakeData[3]);
                                     Duration haltbarkeit = Duration.ofDays(Long.parseLong(cakeData[4]));
-                                    List<Allergen> allergene= this.parseAllergene(cakeData[5].split(","));
+                                    List<Allergen> allergene = this.parseAllergene(cakeData[5].split(","));
                                     String obstsorte = cakeData[6];
                                     this.automat.create(new ObstkuchenImp(-1, new Date(), hersteller, preis, naehrwert, haltbarkeit, allergene, obstsorte));
-                                }catch(Exception e){
+                                } catch (Exception e) {
                                     this.printException(e, c.getMode());
                                 }
 
                             }
-                            break;
-                        case READ:
-                            try{
-                                if (cakeData[0].equals("all")){
-                                    for (ObstkuchenImp k : automat.read().values()){
+                        }
+                        case READ -> {
+                            try {
+                                if (cakeData[0].equals("all")) {
+                                    for (ObstkuchenImp k : automat.read().values()) {
                                         System.out.println("Fachnummer: " + k.getFachnummer() +
                                                 " | Hersteller: " + k.getHersteller().getName() +
                                                 " | Preis: " + k.getPreis() +
                                                 " | Nährwert: " + k.getNaehrwert() +
                                                 " | Haltbarkeit: " + k.getHaltbarkeit().toString() +
-                                                " | Allergen: "+ k.getAllergene() +
-                                                " | Obstsorte: "+ k.getObstsorte());
+                                                " | Allergen: " + k.getAllergene() +
+                                                " | Obstsorte: " + k.getObstsorte());
 
                                     }
-                                }else {
+                                } else {
                                     Obstkuchen k = automat.read().get(Integer.parseInt(cakeData[0]));
                                     if (k != null) {
                                         System.out.println("Fachnummer: " + k.getFachnummer() +
@@ -108,35 +108,33 @@ public class Console {
                                         System.out.println("Fachnummer " + cakeData[0] + " hat keinen Kuchen");
                                     }
                                 }
-                            }catch(Exception e){
+                            } catch (Exception e) {
                                 this.printException(e, c.getMode());
                             }
-                            break;
-                        case UPDATE:
-                            try{
-                                if (this.automat.update(Integer.parseInt(cakeData[0]))){
-                                    System.out.println("Das Inspektionsadtum des Kuchen in Fachnummer: "+ cakeData[0] + " wurde auf heute gesetzt.");
-                                }else{
-                                    System.out.println("In Fachnummer: "+ cakeData[0] + " befindet sich kein Kuchen.");
+                        }
+                        case UPDATE -> {
+                            try {
+                                if (this.automat.update(Integer.parseInt(cakeData[0]))) {
+                                    System.out.println("Das Inspektionsadtum des Kuchen in Fachnummer: " + cakeData[0] + " wurde auf heute gesetzt.");
+                                } else {
+                                    System.out.println("In Fachnummer: " + cakeData[0] + " befindet sich kein Kuchen.");
                                 }
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 this.printException(e, c.getMode());
                             }
-                            break;
-                        case DELETE:
-                            try{
-                                if (this.automat.delete(Integer.parseInt(cakeData[0]))){
-                                    System.out.println("Der Kuchen in Fachnummer: "+ cakeData[0] + " wurde entfernt");
-                                }else{
-                                    System.out.println("In Fachnummer: "+ cakeData[0] + " befindet sich kein Kuchen.");
+                        }
+                        case DELETE -> {
+                            try {
+                                if (this.automat.delete(Integer.parseInt(cakeData[0]))) {
+                                    System.out.println("Der Kuchen in Fachnummer: " + cakeData[0] + " wurde entfernt");
+                                } else {
+                                    System.out.println("In Fachnummer: " + cakeData[0] + " befindet sich kein Kuchen.");
                                 }
-                            }catch(Exception e){
+                            } catch (Exception e) {
                                 this.printException(e, c.getMode());
                             }
-                            break;
-                        case NOMODE:
-                            System.out.println("No Mode selected");
-                            break;
+                        }
+                        case NOMODE -> System.out.println("No Mode selected");
                     }
                 }
             }

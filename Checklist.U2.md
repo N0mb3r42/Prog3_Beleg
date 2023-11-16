@@ -19,8 +19,8 @@ Flüchtige Quellen, wie Sprachmodelle, sind per screen shot zu dokumentieren.
 1 Punkt für die Erfüllung des Pflichtteils
 
 ### Pflichtteil
-- [ ] Quellen angegeben
-- [ ] zip Archiv
+- [x] Quellen angegeben
+- [x] zip Archiv
 - [x] IntelliJ-Projekt (kein Gradle, Maven o.ä.)
 - [x] JUnit5 und Mockito als Testframeworks (soweit verwendet)
 - [x] keine weiteren Bibliotheken außer JavaFX
@@ -30,7 +30,7 @@ Flüchtige Quellen, wie Sprachmodelle, sind per screen shot zu dokumentieren.
 - [x] main-Methoden nur im default package des module belegProg3
 - [x] ausführbar
 - [ ] Benutzeroberfläche und Geschäftslogik korrekt aufgeteilt (mindestens 2-Schichten-Architektur)
-- [ ] prototypisches CLI (nicht notwendig, wenn umfangreicheres CLI realisiert ist)
+- [x] prototypisches CLI (nicht notwendig, wenn umfangreicheres CLI realisiert ist)
 
 ### empfohlene Realisierungen als Vorbereitung auf den Beleg
 werden überprüft (aber nicht bewertet), wenn hier in der vorgegebenen Reihenfolge als bearbeitet angegeben
