@@ -66,13 +66,17 @@ public class Console {
                         case CREATE -> { //Obstkuchen Alice 4,50 386 36 Gluten,Erdnuss Apfel
                             if (cakeData.length == 1) {
                                 HerstellerImp hersteller = new HerstellerImp(cakeData[0]);
+                                //TODO: Hersteller Speicher?
                             } else {
                                 try {
                                     HerstellerImp hersteller = new HerstellerImp(cakeData[1]);
                                     BigDecimal preis = new BigDecimal(cakeData[2].replace(",", "."));
                                     int naehrwert = Integer.parseInt(cakeData[3]);
                                     Duration haltbarkeit = Duration.ofDays(Long.parseLong(cakeData[4]));
-                                    List<Allergen> allergene = this.parseAllergene(cakeData[5].split(","));
+                                    List<Allergen> allergene = null;
+                                    if (!Objects.equals(cakeData[5], ",")) {
+                                        allergene = this.parseAllergene(cakeData[5].split(","));
+                                    }
                                     String obstsorte = cakeData[6];
                                     this.automat.create(new ObstkuchenImp(-1, new Date(), hersteller, preis, naehrwert, haltbarkeit, allergene, obstsorte));
                                 } catch (Exception e) {
@@ -115,7 +119,7 @@ public class Console {
                         case UPDATE -> {
                             try {
                                 if (this.automat.update(Integer.parseInt(cakeData[0]))) {
-                                    System.out.println("Das Inspektionsadtum des Kuchen in Fachnummer: " + cakeData[0] + " wurde auf heute gesetzt.");
+                                    System.out.println("Das Inspektionsdatum des Kuchen in Fachnummer: " + cakeData[0] + " wurde auf heute gesetzt.");
                                 } else {
                                     System.out.println("In Fachnummer: " + cakeData[0] + " befindet sich kein Kuchen.");
                                 }
