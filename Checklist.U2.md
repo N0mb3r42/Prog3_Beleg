@@ -25,10 +25,10 @@ Flüchtige Quellen, wie Sprachmodelle, sind per screen shot zu dokumentieren.
 - [x] JUnit5 und Mockito als Testframeworks (soweit verwendet)
 - [x] keine weiteren Bibliotheken außer JavaFX
 - [x] keine Umlaute, Sonderzeichen, etc. in Datei- und Pfadnamen
-- [ ] kompilierbar
-- [ ] Trennung zwischen Test- und Produktiv-Code
+- [x] kompilierbar
+- [x] Trennung zwischen Test- und Produktiv-Code
 - [x] main-Methoden nur im default package des module belegProg3
-- [ ] ausführbar
+- [x] ausführbar
 - [ ] Benutzeroberfläche und Geschäftslogik korrekt aufgeteilt (mindestens 2-Schichten-Architektur)
 - [ ] prototypisches CLI (nicht notwendig, wenn umfangreicheres CLI realisiert ist)
 

@@ -1,8 +1,8 @@
 package util;
 
 public class Command {
-    public enum Mode{ CREATE,READ,UPDATE,DELETE,PERSISTANCE,NOMODE}
-    public Mode mode;
+    public enum Mode{ CREATE,READ,UPDATE,DELETE,NOMODE}
+    private Mode mode;
     public Command(){
         this.mode = Mode.NOMODE;
     }
@@ -33,5 +33,8 @@ public class Command {
                 //TODO: Persitance Mode when needed
             }
         }
+    }
+    public Mode getMode(){
+        return this.mode;
     }
 }
