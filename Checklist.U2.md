@@ -29,7 +29,7 @@ Flüchtige Quellen, wie Sprachmodelle, sind per screen shot zu dokumentieren.
 - [x] Trennung zwischen Test- und Produktiv-Code
 - [x] main-Methoden nur im default package des module belegProg3
 - [x] ausführbar
-- [ ] Benutzeroberfläche und Geschäftslogik korrekt aufgeteilt (mindestens 2-Schichten-Architektur)
+- [x] Benutzeroberfläche und Geschäftslogik korrekt aufgeteilt (mindestens 2-Schichten-Architektur)
 - [x] prototypisches CLI (nicht notwendig, wenn umfangreicheres CLI realisiert ist)
 
 ### empfohlene Realisierungen als Vorbereitung auf den Beleg

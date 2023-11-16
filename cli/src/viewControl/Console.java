@@ -87,8 +87,6 @@ public class Console {
                                 } catch (Exception e) {
                                     this.printException(e, c.getMode());
                                 }
-
-
                             }
                         }
                         case READ -> {
