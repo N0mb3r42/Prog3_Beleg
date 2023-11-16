@@ -78,16 +78,23 @@ public class Console {
                                         allergene = this.parseAllergene(cakeData[5].split(","));
                                     }
                                     String obstsorte = cakeData[6];
-                                    this.automat.create(new ObstkuchenImp(-1, new Date(), hersteller, preis, naehrwert, haltbarkeit, allergene, obstsorte));
+                                    boolean response = this.automat.create(new ObstkuchenImp(-1, new Date(), hersteller, preis, naehrwert, haltbarkeit, allergene, obstsorte));
+                                    if (response){
+                                        System.out.println("Kuchen wurde eingefügt!");
+                                    }else{
+                                        System.out.println("Irgendwas hat nicht funktioniert (Limit oder Kuchen war fehlerhaft)");
+                                    }
                                 } catch (Exception e) {
                                     this.printException(e, c.getMode());
                                 }
+
 
                             }
                         }
                         case READ -> {
                             try {
                                 if (cakeData[0].equals("all")) {
+                                    System.out.println("Maximal " + this.automat.getAnzahlFaecher() + " Fächer");
                                     for (ObstkuchenImp k : automat.read().values()) {
                                         System.out.println("Fachnummer: " + k.getFachnummer() +
                                                 " | Hersteller: " + k.getHersteller().getName() +
