@@ -1,0 +1,2 @@
+public class MainSim1 {
+}
