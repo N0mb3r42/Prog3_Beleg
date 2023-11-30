@@ -31,7 +31,7 @@ public class verkaufsAutomat {
         this.lager.put(freiersFach, inputKuchen);
         return true;
     }
-    private int findNextFreeSlot(){
+    public int findNextFreeSlot(){
         for (int i = 1; i <= this.anzahlFaecher; i++){
             if (!this.lager.containsKey(i))
                 return i;
