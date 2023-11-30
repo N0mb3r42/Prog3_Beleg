@@ -1,8 +1,8 @@
 package verwaltungsImp;
 
 import kuchenImp.ObstkuchenImp;
-import java.util.Date;
-import java.util.HashMap;
+
+import java.util.*;
 
 public class verkaufsAutomat {
     private final int anzahlFaecher;
@@ -20,13 +20,14 @@ public class verkaufsAutomat {
         this.anzahlFaecher = anzahlFaecher;
         this.lager = new HashMap<Integer, ObstkuchenImp>();
     }
-    public Boolean create(ObstkuchenImp inputKuchen){
-        if (inputKuchen == null){
+    public Boolean create(ObstkuchenImp inputKuchen) {
+        if (inputKuchen == null) {
             return false;
         }
         int freiersFach = this.findNextFreeSlot();
-        if (freiersFach == 0)
+        if (freiersFach == 0){
             return false;
+        }
         inputKuchen.setFachnummer(freiersFach);
         this.lager.put(freiersFach, inputKuchen);
         return true;
@@ -56,6 +57,10 @@ public class verkaufsAutomat {
     }
     public HashMap<Integer, ObstkuchenImp> read(){
         return this.lager;
+    }
+
+    public Collection<ObstkuchenImp> readKuchen(){
+        return this.lager.values();
     }
 
 }
