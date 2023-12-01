@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="109.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvvmDeepBinding.ViewModel">
+    <children>
+        <!--<TextField text="#{controller.modelWithProperties.text}"/>-->
+        <TextField fx:id="input"/>
+        <Label text="${controller.model.text}"/>
+        <Label text="${controller.model.length}"/>
+    </children>
+</VBox>
