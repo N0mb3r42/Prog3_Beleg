@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="763.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiAutomat.ViewController">
+   <children>
+      <SplitPane dividerPositions="0.3182608695652174, 0.6556521739130434" orientation="VERTICAL" prefHeight="577.0" prefWidth="763.0">
+        <items>
+          <AnchorPane id="readPage" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <Button layoutX="-28.0" layoutY="50.0" mnemonicParsing="false" onAction="#readButtonClick" text="Read" translateX="500.0" translateY="100.0" />
+                  <TextField layoutX="297.0" layoutY="150.0" prefHeight="25.0" prefWidth="167.0" promptText="Fachnummer, Empty for all" />
+                  <ListView layoutX="23.0" layoutY="11.0" prefHeight="121.0" prefWidth="713.0" />
+               </children></AnchorPane>
+            <AnchorPane id="deletePage" prefHeight="200.0" prefWidth="761.0">
+               <children>
+                  <Button layoutX="-38.0" layoutY="-19.0" mnemonicParsing="false" onAction="#createButtonClick" text="Create" translateX="500.0" translateY="100.0" />
+                  <TextField fx:id="hersteller" layoutX="307.0" layoutY="14.0" prefHeight="25.0" prefWidth="124.0" promptText="Hersteller" />
+                  <TextField layoutX="307.0" layoutY="48.0" prefHeight="25.0" prefWidth="124.0" promptText="Preis" />
+                  <TextField layoutX="307.0" layoutY="81.0" prefHeight="25.0" prefWidth="124.0" promptText="Haltbarkeit" />
+                  <TextField layoutX="307.0" layoutY="113.0" prefHeight="25.0" prefWidth="124.0" promptText="Nährwert" />
+                  <TextField layoutX="307.0" layoutY="147.0" prefHeight="25.0" prefWidth="124.0" promptText="Zutaten" />
+               </children></AnchorPane>
+          <AnchorPane id="createPage" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <Button layoutX="-144.0" layoutY="28.0" mnemonicParsing="false" onAction="#deleteButtonClick" text="Delete" translateX="500.0" translateY="100.0" />
+                  <ChoiceBox layoutX="166.0" layoutY="82.0" prefHeight="25.0" prefWidth="430.0" />
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

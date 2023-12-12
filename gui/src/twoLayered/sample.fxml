@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.TextField?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="109.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twoLayered.ViewController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="109.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="twoLayered.oldViewController">
     <children>
         <TextField fx:id="input"/>
         <Button onAction="#buttonClick" text="submit" />

@@ -12,5 +12,6 @@
     <orderEntry type="module" module-name="cli" />
     <orderEntry type="module" module-name="Simulation" />
     <orderEntry type="library" name="lib" level="application" />
+    <orderEntry type="module" module-name="gui" />
   </component>
 </module>
