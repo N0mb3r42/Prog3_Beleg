@@ -52,9 +52,9 @@ public class ViewController {
         return allergene;
     }
     private void printException(Exception e, String operation){
+        Alert popup = new Alert(Alert.AlertType.INFORMATION); //Referenz: https://code.makery.ch/blog/javafx-dialogs-official/
         switch (operation) {
             case "Create" -> {
-                Alert popup = new Alert(Alert.AlertType.INFORMATION); //Referenz: https://code.makery.ch/blog/javafx-dialogs-official/
                 popup.setTitle("Fehlerhafte Eingabe ");
                 popup.setHeaderText("Fehlerhafte Eingabe " + e.getMessage());
                 popup.setContentText("Input sollte folgende Formate haben:\n" +
@@ -67,12 +67,17 @@ public class ViewController {
                 popup.showAndWait();
             }
             case "Read" -> {
-                System.out.println("Fehlerhafte Eingabe " + e.getMessage());
-                System.out.println("Input sollte entweder 'all' oder [Integer] sein");
+                popup.setTitle("Fehlerhafte Eingabe ");
+                popup.setHeaderText("Fehlerhafte Eingabe " + e.getMessage());
+                popup.setContentText("Input sollte entweder 'all' oder eine Fachnummer sein");
+                popup.showAndWait();
             }
             case "Delete" -> {
-                System.out.println("Fehlerhafte Eingabe " + e.getMessage());
-                System.out.println("Input sollte Format: [integer] haben");
+
+                popup.setTitle("Fehlerhafte Eingabe ");
+                popup.setHeaderText("Fehlerhafte Eingabe " + e.getMessage());
+                popup.setContentText("Bitte wähle einen Kuchen zum Löschen aus");
+                popup.showAndWait();
             }
         }
 
@@ -116,25 +121,15 @@ public class ViewController {
             this.read_output.getItems().clear();
             if (this.fachnummer.getText().equals("")) {
                 for (ObstkuchenImp k : automat.read().values()) {
-                    this.read_output.getItems().add("Fachnummer: " + k.getFachnummer() +
-                            " | Hersteller: " + k.getHersteller().getName() +
-                            " | Preis: " + k.getPreis() +
-                            " | Nährwert: " + k.getNaehrwert() +
-                            " | Haltbarkeit: " + k.getHaltbarkeit().toString() +
-                            " | Allergen: " + k.getAllergene() +
-                            " | Obstsorte: " + k.getObstsorte());
+                    this.read_output.getItems().add(k);
 
                 }
             } else {
                 Obstkuchen k = automat.read().get(Integer.parseInt(this.fachnummer.getText()));
                 if (k != null) {
-                    this.read_output.getItems().add("Fachnummer: " + k.getFachnummer() +
-                            " | Hersteller: " + k.getHersteller().getName() +
-                            " | Preis: " + k.getPreis() +
-                            " | Nährwert: " + k.getNaehrwert() +
-                            " | Haltbarkeit: " + k.getHaltbarkeit().toString() +
-                            " | Allergen: " + k.getAllergene() +
-                            " | Obstsorte: " + k.getObstsorte());
+                    this.read_output.getItems().add(k);
+                }else{
+                    this.read_output.getItems().add("Fachnummer "+ this.fachnummer.getText() + " ist leer!");
                 }
             }
         } catch (Exception e) {
