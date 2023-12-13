@@ -40,6 +40,16 @@ public class ObstkuchenImp implements Obstkuchen {
         Fachnummer = fachnummer;
     }
 
+    public String toString(){
+        return "Fachnummer: " + this.Fachnummer +
+                " | Hersteller: " + this.Hersteller.getName() +
+                " | Preis: " + this.Preis +
+                " | Nährwert: " + this.Naehrwert +
+                " | Haltbarkeit: " + this.Haltbarkeit.toString() +
+                " | Allergen: " + this.Allergene +
+                " | Obstsorte: " + this.Obstsorte;
+    }
+
 
     @Override
     public HerstellerImp getHersteller() {

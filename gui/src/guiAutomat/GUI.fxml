@@ -10,22 +10,23 @@
           <AnchorPane id="readPage" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
                   <Button layoutX="-28.0" layoutY="50.0" mnemonicParsing="false" onAction="#readButtonClick" text="Read" translateX="500.0" translateY="100.0" />
-                  <TextField layoutX="297.0" layoutY="150.0" prefHeight="25.0" prefWidth="167.0" promptText="Fachnummer, Empty for all" />
-                  <ListView layoutX="23.0" layoutY="11.0" prefHeight="121.0" prefWidth="713.0" />
+                  <TextField fx:id="fachnummer" layoutX="297.0" layoutY="150.0" prefHeight="25.0" prefWidth="167.0" promptText="Fachnummer, Empty for all" />
+                  <ListView fx:id="read_output" layoutX="23.0" layoutY="11.0" prefHeight="121.0" prefWidth="713.0" />
                </children></AnchorPane>
             <AnchorPane id="deletePage" prefHeight="200.0" prefWidth="761.0">
                <children>
-                  <Button layoutX="-38.0" layoutY="-19.0" mnemonicParsing="false" onAction="#createButtonClick" text="Create" translateX="500.0" translateY="100.0" />
-                  <TextField fx:id="hersteller" layoutX="307.0" layoutY="14.0" prefHeight="25.0" prefWidth="124.0" promptText="Hersteller" />
-                  <TextField layoutX="307.0" layoutY="48.0" prefHeight="25.0" prefWidth="124.0" promptText="Preis" />
-                  <TextField layoutX="307.0" layoutY="81.0" prefHeight="25.0" prefWidth="124.0" promptText="Haltbarkeit" />
-                  <TextField layoutX="307.0" layoutY="113.0" prefHeight="25.0" prefWidth="124.0" promptText="Nährwert" />
-                  <TextField layoutX="307.0" layoutY="147.0" prefHeight="25.0" prefWidth="124.0" promptText="Zutaten" />
+                  <Button fx:id="create_button" layoutX="-145.0" layoutY="-18.0" mnemonicParsing="false" onAction="#createButtonClick" text="Create" translateX="500.0" translateY="100.0" />
+                  <TextField id="hersteller" fx:id="hersteller" layoutX="14.0" layoutY="23.0" prefHeight="25.0" prefWidth="124.0" promptText="Hersteller" />
+                  <TextField id="preis" fx:id="preis" layoutX="144.0" layoutY="23.0" prefHeight="25.0" prefWidth="124.0" promptText="Preis" />
+                  <TextField id="haltbarkeit" fx:id="haltbarkeit" layoutX="274.0" layoutY="23.0" prefHeight="25.0" prefWidth="124.0" promptText="Haltbarkeit" />
+                  <TextField id="naehrwert" fx:id="naehrwert" layoutX="406.0" layoutY="23.0" prefHeight="25.0" prefWidth="124.0" promptText="Nährwert" />
+                  <TextField fx:id="zutaten" layoutX="14.0" layoutY="56.0" prefHeight="25.0" prefWidth="124.0" promptText="Zutaten" />
+                  <TextField id="allergene" fx:id="allergene" layoutX="536.0" layoutY="23.0" prefHeight="25.0" prefWidth="199.0" promptText="Allergene" />
                </children></AnchorPane>
           <AnchorPane id="createPage" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
                   <Button layoutX="-144.0" layoutY="28.0" mnemonicParsing="false" onAction="#deleteButtonClick" text="Delete" translateX="500.0" translateY="100.0" />
-                  <ChoiceBox layoutX="166.0" layoutY="82.0" prefHeight="25.0" prefWidth="430.0" />
+                  <ChoiceBox fx:id="delete_choice" layoutX="166.0" layoutY="82.0" prefHeight="25.0" prefWidth="430.0" />
                </children></AnchorPane>
         </items>
       </SplitPane>
