@@ -47,7 +47,8 @@ public class ObstkuchenImp implements Obstkuchen {
                 " | Nährwert: " + this.Naehrwert +
                 " | Haltbarkeit: " + this.Haltbarkeit.toString() +
                 " | Allergen: " + this.Allergene +
-                " | Obstsorte: " + this.Obstsorte;
+                " | Obstsorte: " + this.Obstsorte +
+                " | Inspektionsdatum: " + this.InspectionDate.toString();
     }
 
 

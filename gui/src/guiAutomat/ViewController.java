@@ -28,6 +28,8 @@ public class ViewController {
     @FXML private ChoiceBox delete_choice;
     @FXML private ListView read_output;
     @FXML private Button create_button;
+    @FXML private Button update_button;
+
 
     public ViewController(Integer faecher){
         this.automat = new verkaufsAutomat(faecher);
@@ -66,7 +68,7 @@ public class ViewController {
                         "Zutaten: String\n");
                 popup.showAndWait();
             }
-            case "Read" -> {
+            case "Read", "Update" -> {
                 popup.setTitle("Fehlerhafte Eingabe ");
                 popup.setHeaderText("Fehlerhafte Eingabe " + e.getMessage());
                 popup.setContentText("Input sollte entweder 'all' oder eine Fachnummer sein");
@@ -146,6 +148,31 @@ public class ViewController {
             this.printException(e, "Delete");
         }
         this.updateView();
+
+    }
+    @FXML private void updateButtonClick(ActionEvent actionEvent){
+        System.out.println("Update Button clicked");
+        Collection<ObstkuchenImp> lager = this.automat.readKuchen();
+        try{
+            this.read_output.getItems().clear();
+            if (this.fachnummer.getText().equals("")) {
+                for (ObstkuchenImp k : automat.read().values()) {
+                    this.automat.update(k.getFachnummer());
+                    this.read_output.getItems().add(k);
+
+                }
+            } else {
+                Obstkuchen k = automat.read().get(Integer.parseInt(this.fachnummer.getText()));
+                if (k != null) {
+                    this.automat.update(k.getFachnummer());
+                    this.read_output.getItems().add(k);
+                }else{
+                    this.read_output.getItems().add("Fachnummer "+ this.fachnummer.getText() + " ist leer!");
+                }
+            }
+        } catch (Exception e) {
+            this.printException(e, "Read");
+        }
 
     }
     private void updateView(){

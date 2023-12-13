@@ -20,12 +20,12 @@ Flüchtige Quellen, wie Sprachmodelle, sind per screen shot zu dokumentieren.
 - [x] JUnit5 und Mockito als Testframeworks (soweit verwendet)
 - [x] keine weiteren Bibliotheken außer JavaFX
 - [x] keine Umlaute, Sonderzeichen, etc. in Datei- und Pfadnamen
-- [ ] kompilierbar
-- [ ] Trennung zwischen Test- und Produktiv-Code
-- [ ] main-Methoden nur im default package des module belegProg3
-- [ ] ausführbar
-- [ ] CRUD für mindestens eine Kuchensorte in der GUI
-- [ ] Geschäfts- und Darstellungslogik getrennt (mindestens 2-Schichten-Architektur)
+- [x] kompilierbar
+- [x] Trennung zwischen Test- und Produktiv-Code
+- [x] main-Methoden nur im default package des module belegProg3
+- [x] ausführbar
+- [x] CRUD für mindestens eine Kuchensorte in der GUI
+- [x] Geschäfts- und Darstellungslogik getrennt (mindestens 2-Schichten-Architektur)
 
 ### empfohlene Realisierungen als Vorbereitung auf den Beleg
 werden überprüft (aber nicht bewertet), wenn hier in der vorgegebenen Reihenfolge als bearbeitet angegeben
