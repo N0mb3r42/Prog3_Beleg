@@ -4,7 +4,6 @@ import verwaltungsImp.HerstellerImp;
 import kuchen.Allergen;
 import io.Serializer;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.*;
