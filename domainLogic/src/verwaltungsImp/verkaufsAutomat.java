@@ -2,9 +2,14 @@ package verwaltungsImp;
 
 import kuchenImp.ObstkuchenImp;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.*;
 
-public class verkaufsAutomat {
+public class verkaufsAutomat implements Serializable {
+    static final long serializableUID = 1L;
     private final int anzahlFaecher;
     private HashMap<Integer, ObstkuchenImp> lager;
 
@@ -62,5 +67,4 @@ public class verkaufsAutomat {
     public Collection<ObstkuchenImp> readKuchen(){
         return this.lager.values();
     }
-
 }

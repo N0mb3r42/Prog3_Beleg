@@ -1,7 +1,11 @@
 package verwaltungsImp;
 import verwaltung.Hersteller;
 
-public class HerstellerImp implements Hersteller {
+import java.io.Serializable;
+
+public class HerstellerImp implements Hersteller, Serializable {
+
+    static final long serializableUID = 1L;
     private final String name;
 
     public HerstellerImp(String name){

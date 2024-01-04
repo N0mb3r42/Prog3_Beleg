@@ -4,14 +4,16 @@ import kuchen.Allergen;
 import kuchen.Obstkuchen;
 import verwaltungsImp.HerstellerImp;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
-public class ObstkuchenImp implements Obstkuchen {
+public class ObstkuchenImp implements Obstkuchen, Serializable{
 
+    static final long serializableUID = 1L;
     private int Fachnummer;
     private Date InspectionDate;
     private final HerstellerImp Hersteller;
