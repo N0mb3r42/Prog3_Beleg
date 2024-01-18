@@ -48,11 +48,11 @@ public class mainIO {
         return new ObstkuchenImp(
                 -1,
                 new Date(),
-                new HerstellerImp(hersteller.getFirst()),
-                new BigDecimal(preis.getFirst()),
-                naehrwert.getFirst(),
-                Duration.ofDays(haltbarkeit.getFirst()),
-                allergene.getFirst(),
-                obstsorte.getFirst());
+                new HerstellerImp(hersteller.get(0)),
+                new BigDecimal(preis.get(0)),
+                naehrwert.get(0),
+                Duration.ofDays(haltbarkeit.get(0)),
+                allergene.get(0),
+                obstsorte.get(0));
     }
 }
