@@ -55,9 +55,8 @@ public class Console {
                 System.out.println("What do you want to do?:");
                 String input = s.nextLine();
                 if (input.startsWith(":")){
-                    c.nextCommand(input);
+                    System.out.println(c.nextCommand(input));
                     if (input.startsWith(":e")){
-                        System.out.println("Exiting...");
                         System.exit(0);
                     }
                 }else{

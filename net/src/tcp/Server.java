@@ -2,10 +2,13 @@ package tcp;
 
 import javax.swing.*;
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,7 +21,7 @@ import kuchen.Allergen;
 
 
 
-public class Server {
+public class Server{
     private int port;
     private verkaufsAutomat automat;
     private Command c;
@@ -43,6 +46,115 @@ public class Server {
         }
         return allergene;
     }
+    private String printException(Exception e, Command.Mode mode){
+        switch (mode) {
+            case CREATE -> {
+                return "Fehlerhafte Eingabe " + e.getMessage() + "\nInput sollte Format: [String] [String] [Decimal] [Integer] [Integer] [String, String] [String] haben";
+            }
+            case READ -> {
+                return "Fehlerhafte Eingabe " + e.getMessage() + "\nInput sollte entweder 'all' oder [Integer] sein";
+            }
+            case UPDATE, DELETE -> {
+                return "Fehlerhafte Eingabe " + e.getMessage() + "\nInput sollte Format: [integer] haben";
+            }
+        }
+        return null;
+    }
+    private String command_handling(String input) {
+        if (input.startsWith(":")){
+            return c.nextCommand(input);
+        }else{
+            String[] cakeData = input.split(" ");
+            System.out.println(cakeData);
+            switch (c.getMode()) {
+                case CREATE -> { //Obstkuchen Alice 4,50 386 36 Gluten,Erdnuss Apfel
+                    if (cakeData.length == 1) {
+                        HerstellerImp hersteller = new HerstellerImp(cakeData[0]);
+                        //TODO: Hersteller Speicher?
+                    } else {
+                        try {
+                            HerstellerImp hersteller = new HerstellerImp(cakeData[1]);
+                            BigDecimal preis = new BigDecimal(cakeData[2].replace(",", "."));
+                            int naehrwert = Integer.parseInt(cakeData[3]);
+                            Duration haltbarkeit = Duration.ofDays(Long.parseLong(cakeData[4]));
+                            List<Allergen> allergene = null;
+                            if (!Objects.equals(cakeData[5], ",")) {
+                                allergene = this.parseAllergene(cakeData[5].split(","));
+                            }
+                            String obstsorte = cakeData[6];
+                            boolean response = this.automat.create(new ObstkuchenImp(-1, new Date(), hersteller, preis, naehrwert, haltbarkeit, allergene, obstsorte));
+                            if (response){
+                                return "Kuchen wurde eingefügt!\n";
+                            }else{
+                                return "Irgendwas hat nicht funktioniert (Limit oder Kuchen war fehlerhaft)\n";
+                            }
+                        } catch (Exception e) {
+                            return this.printException(e, c.getMode());
+                        }
+                    }
+                }
+                case READ -> {
+                    try {
+                        if (cakeData[0].equals("all")) {
+                            String return_string = "Maximal " + this.automat.getAnzahlFaecher() + " Fächer\n";
+                            for (ObstkuchenImp k : automat.read().values()) {
+                                return_string = return_string + "Fachnummer: " + k.getFachnummer() +
+                                        " | Hersteller: " + k.getHersteller().getName() +
+                                        " | Preis: " + k.getPreis() +
+                                        " | Nährwert: " + k.getNaehrwert() +
+                                        " | Haltbarkeit: " + k.getHaltbarkeit().toString() +
+                                        " | Allergen: " + k.getAllergene() +
+                                        " | Obstsorte: " + k.getObstsorte() + "\n";
+
+                            }
+                            return return_string;
+                        } else {
+                            Obstkuchen k = automat.read().get(Integer.parseInt(cakeData[0]));
+                            if (k != null) {
+                                return "Fachnummer: " + k.getFachnummer() +
+                                        " | Hersteller: " + k.getHersteller().getName() +
+                                        " | Preis: " + k.getPreis() +
+                                        " | Nährwert: " + k.getNaehrwert() +
+                                        " | Haltbarkeit: " + k.getHaltbarkeit().toString() +
+                                        " | Allergen: " + k.getAllergene() +
+                                        " | Obstsorte: " + k.getObstsorte() + "\n";
+                            } else {
+                                return "Fachnummer " + cakeData[0] + " hat keinen Kuchen\n";
+                            }
+                        }
+                    } catch (Exception e) {
+                        this.printException(e, c.getMode());
+                    }
+                }
+                case UPDATE -> {
+                    try {
+                        if (this.automat.update(Integer.parseInt(cakeData[0]))) {
+                            return "Das Inspektionsdatum des Kuchen in Fachnummer: " + cakeData[0] + " wurde auf heute gesetzt.\n";
+                        } else {
+                            return "In Fachnummer: " + cakeData[0] + " befindet sich kein Kuchen.\n";
+                        }
+                    } catch (Exception e) {
+                        this.printException(e, c.getMode());
+                    }
+                }
+                case DELETE -> {
+                    try {
+                        if (this.automat.delete(Integer.parseInt(cakeData[0]))) {
+                            return "Der Kuchen in Fachnummer: " + cakeData[0] + " wurde entfernt\n";
+                        } else {
+                            return "In Fachnummer: " + cakeData[0] + " befindet sich kein Kuchen.\n";
+                        }
+                    } catch (Exception e) {
+                        this.printException(e, c.getMode());
+                    }
+                }
+                case NOMODE -> {
+                    return "No Mode selected\n";
+                }
+            }
+        }
+        return null;
+    }
 
     private String checkForExit(String input) {
         if (input.equals(":e")) {
@@ -62,7 +174,10 @@ public class Server {
                     while (true) {
                         String input = in.readUTF();
                         System.out.println("recieved: " + input);
-                        out.writeUTF(checkForExit(input));
+                        String return_value = command_handling(input);
+                        if (return_value != null){
+                            out.writeUTF(return_value);
+                        }
                     }
                 } catch (SocketException | EOFException e) {
                     System.out.println("client disconnect");

@@ -33,14 +33,11 @@ public class Client{
             while(run){
                 out.writeUTF(inputScanner.nextLine());
                 String input = in.readUTF();
-                if(input.equals("beenden")){
-                    System.out.println("beende den Client");
+                if (input.contains("Exiting...")){
                     run = false;
-                }else{
-                    System.out.println("nicht beenden");
-                }
+                    System.out.println(input);
+                }else System.out.println(input);
             }
-            inputScanner.close();
         }catch (IOException e){
             e.printStackTrace();
         }
