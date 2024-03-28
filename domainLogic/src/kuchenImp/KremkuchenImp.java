@@ -1,7 +1,7 @@
 package kuchenImp;
 
 import kuchen.Allergen;
-import kuchen.Obstkuchen;
+import kuchen.Kremkuchen;
 import verwaltungsImp.HerstellerImp;
 
 import java.io.Serializable;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
-public class ObstkuchenImp implements Obstkuchen, Serializable{
+public class KremkuchenImp implements Kremkuchen, Serializable{
 
     static final long serializableUID = 1L;
     private int Fachnummer;
@@ -20,9 +20,10 @@ public class ObstkuchenImp implements Obstkuchen, Serializable{
     private final Collection<Allergen> Allergene;
     private final int Naehrwert;
     private final Duration Haltbarkeit;
-    private final String Obstsorte;
+    private final String Kremsorte;
     private final BigDecimal Preis;
-    public ObstkuchenImp(int fachnummer, Date InspectionDate, HerstellerImp hersteller, BigDecimal preis, int naehrwert, Duration haltbarkeit, Collection<Allergen> allergene, String obstsorte) {
+
+    public KremkuchenImp(int fachnummer, Date InspectionDate, HerstellerImp hersteller, BigDecimal preis, int naehrwert, Duration haltbarkeit, Collection<Allergen> allergene, String Kremsorte) {
         this.Fachnummer = fachnummer;
         this.InspectionDate = InspectionDate;
         this.Hersteller = hersteller;
@@ -30,18 +31,15 @@ public class ObstkuchenImp implements Obstkuchen, Serializable{
         this.Naehrwert = naehrwert;
         this.Haltbarkeit = haltbarkeit;
         this.Allergene = allergene;
-        this.Obstsorte = obstsorte;
+        this.Kremsorte = Kremsorte;
     }
-
     public void setInspectionDate(Date inspectionDate) {
         InspectionDate = inspectionDate;
     }
 
-
     public void setFachnummer(int fachnummer) {
         Fachnummer = fachnummer;
     }
-
     public String toString(){
         return "Fachnummer: " + this.Fachnummer +
                 " | Hersteller: " + this.Hersteller.getName() +
@@ -49,10 +47,13 @@ public class ObstkuchenImp implements Obstkuchen, Serializable{
                 " | Nährwert: " + this.Naehrwert +
                 " | Haltbarkeit: " + this.Haltbarkeit.toString() +
                 " | Allergen: " + this.Allergene +
-                " | Obstsorte: " + this.Obstsorte +
+                " | Kremsorte: " + this.Kremsorte +
                 " | Inspektionsdatum: " + this.InspectionDate.toString();
     }
-
+    @Override
+    public String getKremsorte() {
+        return this.Kremsorte;
+    }
 
     @Override
     public HerstellerImp getHersteller() {
@@ -72,11 +73,6 @@ public class ObstkuchenImp implements Obstkuchen, Serializable{
     @Override
     public Duration getHaltbarkeit() {
         return this.Haltbarkeit;
-    }
-
-    @Override
-    public String getObstsorte() {
-        return this.Obstsorte;
     }
 
     @Override
