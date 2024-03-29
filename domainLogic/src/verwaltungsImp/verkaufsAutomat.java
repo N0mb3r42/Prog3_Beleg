@@ -99,9 +99,6 @@ public class verkaufsAutomat implements Serializable {
     }
 
     private Boolean create(KuchenImp inputKuchen){
-        if (inputKuchen == null) {
-            return false;
-        }
         int freiersFach = this.findNextFreeSlot();
         if (freiersFach == 0){
             return false;
