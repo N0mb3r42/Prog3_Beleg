@@ -6,7 +6,9 @@ import javafx.collections.ObservableListBase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import kuchen.Kuchen;
 import kuchen.Obstkuchen;
+import kuchenImp.KuchenImp;
 import kuchenImp.ObstkuchenImp;
 import verwaltungsImp.HerstellerImp;
 import verwaltungsImp.verkaufsAutomat;
@@ -101,12 +103,23 @@ public class ViewController {
             if (!Objects.equals(this.allergene.getText(), "")) {
                 allergene = this.parseAllergene(this.allergene.getText().split(","));
             }
-            String obstsorte = this.zutaten.getText();
-            ObstkuchenImp kuchen = new ObstkuchenImp(-1, new Date(), hersteller, preis, naehrwert, haltbarkeit, allergene, obstsorte);
-            boolean response = this.automat.create(kuchen);
+            String zutatenString = this.zutaten.getText();
+            //TODO: Add KuchenTyp Abfrage
+            String kuchenTyp = "Obstkuchen";
+            this.automat.addHersteller(hersteller.getName());
+            boolean response = this.automat.create(
+                    kuchenTyp,
+                    hersteller,
+                    preis,
+                    naehrwert,
+                    haltbarkeit,
+                    allergene,
+                    (kuchenTyp.equals("Obstkuchen") || kuchenTyp.equals("Obsttorte")) ? zutatenString : null,
+                    (kuchenTyp.equals("Kremkuchen") || kuchenTyp.equals("Obsttorte")) ? zutatenString : null
+            );
+
             if (response){
                 System.out.println("Kuchen wurde eingefügt!");
-                System.out.println(kuchen.getFachnummer());
             }else{
                 System.out.println("Irgendwas hat nicht funktioniert (Limit oder Kuchen war fehlerhaft)");
             }
@@ -118,18 +131,17 @@ public class ViewController {
     }
     @FXML private void readButtonClick(ActionEvent actionEvent) {
         System.out.println("Read Button clicked");
-        Collection<ObstkuchenImp> lager = this.automat.readKuchen();
+        Collection<KuchenImp> lager = this.automat.readKuchen();
         try{
             this.read_output.getItems().clear();
             if (this.fachnummer.getText().equals("")) {
-                for (ObstkuchenImp k : automat.read().values()) {
+                for (KuchenImp k : automat.readKuchen()) {
                     this.read_output.getItems().add(k);
-
                 }
             } else {
-                Obstkuchen k = automat.read().get(Integer.parseInt(this.fachnummer.getText()));
-                if (k != null) {
-                    this.read_output.getItems().add(k);
+                KuchenImp fk = this.automat.readKuchen(Integer.parseInt(this.fachnummer.getText()));
+                if (fk != null) {
+                    this.read_output.getItems().add(fk);
                 }else{
                     this.read_output.getItems().add("Fachnummer "+ this.fachnummer.getText() + " ist leer!");
                 }
@@ -152,17 +164,17 @@ public class ViewController {
     }
     @FXML private void updateButtonClick(ActionEvent actionEvent){
         System.out.println("Update Button clicked");
-        Collection<ObstkuchenImp> lager = this.automat.readKuchen();
+        Collection<KuchenImp> lager = this.automat.readKuchen();
         try{
             this.read_output.getItems().clear();
             if (this.fachnummer.getText().equals("")) {
-                for (ObstkuchenImp k : automat.read().values()) {
+                for (KuchenImp k : lager) {
                     this.automat.update(k.getFachnummer());
                     this.read_output.getItems().add(k);
 
                 }
             } else {
-                Obstkuchen k = automat.read().get(Integer.parseInt(this.fachnummer.getText()));
+                KuchenImp k = automat.readKuchen(Integer.parseInt(this.fachnummer.getText()));
                 if (k != null) {
                     this.automat.update(k.getFachnummer());
                     this.read_output.getItems().add(k);
@@ -178,7 +190,7 @@ public class ViewController {
     private void updateView(){
         this.create_button.setDisable(this.automat.findNextFreeSlot() == 0);
         this.delete_choice.getItems().clear();
-        for (ObstkuchenImp k : automat.read().values()) {
+        for (KuchenImp k : automat.readKuchen()) {
             this.delete_choice.getItems().add(k);
         }
     }

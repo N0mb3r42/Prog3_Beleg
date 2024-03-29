@@ -1,3 +1,5 @@
+import kuchen.Kuchen;
+import kuchenImp.KuchenImp;
 import kuchenImp.ObstkuchenImp;
 import verwaltungsImp.verkaufsAutomat;
 import verwaltungsImp.HerstellerImp;
@@ -7,52 +9,62 @@ import io.Serializer;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class mainIO {
+    private static final String[] kuchenTyp = {"Obstkuchen", "Kremkuchen", "Obsttorte"};
+    private static final String[] obstSorte = {"Apfel", "Erdbeere", "Pflaume", "Kirsche", "Pfirsich"};
+    private static final String[] kremSorte = {"Sahne", "Butter", "Schoko", "Haselnuss", "Mascarapone"};
+    private static final String[] herstellerListe = {"Jannik", "Xeni", "Foo", "Bar", "Tante Emma"};
     public static void main(String[] args) {
         verkaufsAutomat vk = new verkaufsAutomat(5);
-        vk.create(createKuchenRandom());
-        vk.create(createKuchenRandom());
-        vk.create(createKuchenRandom());
-        vk.create(createKuchenRandom());
-        vk.create(createKuchenRandom());
+
+        vk.addHersteller("Jannik");
+        vk.addHersteller("Xeni");
+        vk.addHersteller("Foo");
+        vk.addHersteller("Bar");
+        vk.addHersteller("Tante Emma");
+
+        createKuchenRandom(vk, kuchenTyp[getRandomInt(0, kuchenTyp.length - 1)]);
+        createKuchenRandom(vk, kuchenTyp[getRandomInt(0, kuchenTyp.length - 1)]);
+        createKuchenRandom(vk, kuchenTyp[getRandomInt(0, kuchenTyp.length - 1)]);
+        createKuchenRandom(vk, kuchenTyp[getRandomInt(0, kuchenTyp.length - 1)]);
+        createKuchenRandom(vk, kuchenTyp[getRandomInt(0, kuchenTyp.length - 1)]);
+
         Serializer.serializer("vk.txt", vk);
 
         verkaufsAutomat vk2 = (verkaufsAutomat) Serializer.deserialize("vk.txt");
-        Collection<ObstkuchenImp> lager = vk2.readKuchen();
-        for (ObstkuchenImp k : lager) {
+        Collection<KuchenImp> lager = vk2.readKuchen();
+        for (KuchenImp k : lager) {
             System.out.println(k);
         }
     }
 
-    public static ObstkuchenImp createKuchenRandom(){
-        List<String> hersteller = Arrays.asList("Jannik", "Xeni", "Foo", "Bar", "Tante Emma");
-        List<String> obstsorte = Arrays.asList("Apfel", "Erdbeere", "Pflaume", "Kirsche", "Pfirsich");
-        List<String> preis = Arrays.asList("4.99", "3.50", "2.99", "6.00", "1.99");
-        List<Integer> naehrwert = Arrays.asList(300, 299, 450, 220, 321);
-        List<Integer> haltbarkeit = Arrays.asList(30, 15, 7, 8, 10);
-        List<List<Allergen>> allergene = Arrays.asList(
-                Arrays.asList(Allergen.Erdnuss, Allergen.Gluten),
-                Arrays.asList(Allergen.Gluten, Allergen.Haselnuss),
-                Arrays.asList(Allergen.Haselnuss, Allergen.Sesamsamen),
-                Arrays.asList(Allergen.Sesamsamen, Allergen.Erdnuss));
+    public static void createKuchenRandom(verkaufsAutomat vk, String kuchenTypString){
+        vk.create(
+                kuchenTypString,
+                new HerstellerImp(herstellerListe[getRandomInt(0, herstellerListe.length - 1)]),
+                BigDecimal.valueOf(getRandomInt(2,10)),
+                getRandomInt(300, 500),
+                Duration.ofDays(getRandomInt(1,14)),
+                generateAllergene(),
+                (kuchenTypString.equals("Obstkuchen") || kuchenTypString.equals("Obsttorte")) ? obstSorte[getRandomInt(0, obstSorte.length - 1)] : null,
+                (kuchenTypString.equals("Kremkuchen") || kuchenTypString.equals("Obsttorte")) ? kremSorte[getRandomInt(0, kremSorte.length - 1)] : null
+        );
+    }
 
-        Collections.shuffle(hersteller);
-        Collections.shuffle(obstsorte);
-        Collections.shuffle(preis);
-        Collections.shuffle(naehrwert);
-        Collections.shuffle(haltbarkeit);
-        Collections.shuffle(allergene);
+    private static int getRandomInt(int min, int max){
+        // https://stackoverflow.com/questions/363681/how-do-i-generate-random-integers-within-a-specific-range-in-java
+        return ThreadLocalRandom.current().nextInt(min, max + 1);
+    }
 
-        return new ObstkuchenImp(
-                -1,
-                new Date(),
-                new HerstellerImp(hersteller.get(0)),
-                new BigDecimal(preis.get(0)),
-                naehrwert.get(0),
-                Duration.ofDays(haltbarkeit.get(0)),
-                allergene.get(0),
-                obstsorte.get(0));
+    private static List<Allergen> generateAllergene(){
+        List<Allergen> set = new ArrayList<Allergen>();
+        for (Allergen x : EnumSet.allOf(Allergen.class)){
+            if (getRandomInt(0, 100) > 66)
+                set.add(x);
+        }
+        return set;
     }
 }

@@ -1,6 +1,7 @@
 package kuchenImp;
 
 import kuchen.Allergen;
+import kuchen.Kremkuchen;
 import kuchen.Obstkuchen;
 import verwaltungsImp.HerstellerImp;
 
@@ -10,40 +11,21 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
-public class ObstkuchenImp implements Obstkuchen, Serializable{
-
-    static final long serializableUID = 1L;
-    private int Fachnummer;
-    private Date InspectionDate;
-    private final HerstellerImp Hersteller;
-    private final Collection<Allergen> Allergene;
-    private final int Naehrwert;
-    private final Duration Haltbarkeit;
+public class ObstkuchenImp extends KuchenImp implements Obstkuchen, Serializable {
     private final String Obstsorte;
-    private final BigDecimal Preis;
-    public ObstkuchenImp(int fachnummer, Date InspectionDate, HerstellerImp hersteller, BigDecimal preis, int naehrwert, Duration haltbarkeit, Collection<Allergen> allergene, String obstsorte) {
-        this.Fachnummer = fachnummer;
-        this.InspectionDate = InspectionDate;
-        this.Hersteller = hersteller;
-        this.Preis = preis;
-        this.Naehrwert = naehrwert;
-        this.Haltbarkeit = haltbarkeit;
-        this.Allergene = allergene;
-        this.Obstsorte = obstsorte;
+
+    public ObstkuchenImp(int fachnummer, Date InspectionDate, HerstellerImp hersteller, BigDecimal preis, int naehrwert, Duration haltbarkeit, List<Allergen> allergene, String Obstsorte) {
+        super(fachnummer, InspectionDate, hersteller, preis, naehrwert, haltbarkeit, allergene);
+        this.Obstsorte = Obstsorte;
+        this.KuchenTyp = "Obstkuchen";
     }
 
-    public void setInspectionDate(Date inspectionDate) {
-        InspectionDate = inspectionDate;
-    }
-
-
-    public void setFachnummer(int fachnummer) {
-        Fachnummer = fachnummer;
-    }
-
-    public String toString(){
+    @Override
+    public String toString() {
         return "Fachnummer: " + this.Fachnummer +
+                " | KuchenTyp: " + this.KuchenTyp +
                 " | Hersteller: " + this.Hersteller.getName() +
                 " | Preis: " + this.Preis +
                 " | Nährwert: " + this.Naehrwert +
@@ -53,44 +35,8 @@ public class ObstkuchenImp implements Obstkuchen, Serializable{
                 " | Inspektionsdatum: " + this.InspectionDate.toString();
     }
 
-
-    @Override
-    public HerstellerImp getHersteller() {
-        return this.Hersteller;
-    }
-
-    @Override
-    public Collection<Allergen> getAllergene() {
-        return this.Allergene;
-    }
-
-    @Override
-    public int getNaehrwert() {
-        return this.Naehrwert;
-    }
-
-    @Override
-    public Duration getHaltbarkeit() {
-        return this.Haltbarkeit;
-    }
-
     @Override
     public String getObstsorte() {
         return this.Obstsorte;
-    }
-
-    @Override
-    public BigDecimal getPreis() {
-        return this.Preis;
-    }
-
-    @Override
-    public Date getInspektionsdatum() {
-        return this.InspectionDate;
-    }
-
-    @Override
-    public int getFachnummer() {
-        return this.Fachnummer;
     }
 }

@@ -1,5 +1,7 @@
 package Simulation1;
 
+import kuchen.Kuchen;
+import kuchenImp.KuchenImp;
 import kuchenImp.ObstkuchenImp;
 import verwaltungsImp.verkaufsAutomat;
 
@@ -18,7 +20,7 @@ public class DeleteKuchenThread extends Thread{
     public void run() {
         while (true){
             synchronized (this.automat){
-                List<ObstkuchenImp> kuchen = new ArrayList<ObstkuchenImp>(this.automat.readKuchen());
+                List<KuchenImp> kuchen = new ArrayList<>(this.automat.readKuchen());
                 Collections.shuffle(kuchen);
                 if (kuchen.size() == 0){
                     continue;
