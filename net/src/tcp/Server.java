@@ -1,6 +1,5 @@
 package tcp;
 
-import javax.swing.*;
 import java.io.*;
 import java.math.BigDecimal;
 import java.net.ServerSocket;
@@ -8,11 +7,11 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 import kuchen.Obstkuchen;
+import kuchenImp.KuchenImp;
 import kuchenImp.ObstkuchenImp;
 import util.Command;
 import verwaltungsImp.HerstellerImp;
@@ -70,7 +69,7 @@ public class Server{
                 case CREATE -> { //Obstkuchen Alice 4,50 386 36 Gluten,Erdnuss Apfel
                     if (cakeData.length == 1) {
                         HerstellerImp hersteller = new HerstellerImp(cakeData[0]);
-                        //TODO: Hersteller Speicher?
+                        this.automat.addHersteller(hersteller.getName());
                     } else {
                         try {
                             HerstellerImp hersteller = new HerstellerImp(cakeData[1]);
@@ -81,8 +80,17 @@ public class Server{
                             if (!Objects.equals(cakeData[5], ",")) {
                                 allergene = this.parseAllergene(cakeData[5].split(","));
                             }
-                            String obstsorte = cakeData[6];
-                            boolean response = this.automat.create(new ObstkuchenImp(-1, new Date(), hersteller, preis, naehrwert, haltbarkeit, allergene, obstsorte));
+                            this.automat.addHersteller(hersteller.getName());
+                            boolean response = this.automat.create(
+                                    cakeData[0],
+                                    hersteller,
+                                    preis,
+                                    naehrwert,
+                                    haltbarkeit,
+                                    allergene,
+                                    (cakeData[0].equals("Obstkuchen") || cakeData[0].equals("Obsttorte")) ? cakeData[6] : null,
+                                    (cakeData[0].equals("Kremkuchen") || cakeData[0].equals("Obsttorte")) ? cakeData[7] : null
+                            );
                             if (response){
                                 return "Kuchen wurde eingefügt!\n";
                             }else{
@@ -96,28 +104,16 @@ public class Server{
                 case READ -> {
                     try {
                         if (cakeData[0].equals("all")) {
-                            String return_string = "Maximal " + this.automat.getAnzahlFaecher() + " Fächer\n";
-                            for (ObstkuchenImp k : automat.read().values()) {
-                                return_string = return_string + "Fachnummer: " + k.getFachnummer() +
-                                        " | Hersteller: " + k.getHersteller().getName() +
-                                        " | Preis: " + k.getPreis() +
-                                        " | Nährwert: " + k.getNaehrwert() +
-                                        " | Haltbarkeit: " + k.getHaltbarkeit().toString() +
-                                        " | Allergen: " + k.getAllergene() +
-                                        " | Obstsorte: " + k.getObstsorte() + "\n";
+                            StringBuilder return_string = new StringBuilder("Maximal " + this.automat.getAnzahlFaecher() + " Fächer\n");
+                            for (KuchenImp k : automat.readKuchen()) {
+                                return_string.append(k.toString()).append("\n");
 
                             }
-                            return return_string;
+                            return return_string.toString();
                         } else {
-                            Obstkuchen k = automat.read().get(Integer.parseInt(cakeData[0]));
+                            KuchenImp k = automat.readKuchen(Integer.parseInt(cakeData[0]));
                             if (k != null) {
-                                return "Fachnummer: " + k.getFachnummer() +
-                                        " | Hersteller: " + k.getHersteller().getName() +
-                                        " | Preis: " + k.getPreis() +
-                                        " | Nährwert: " + k.getNaehrwert() +
-                                        " | Haltbarkeit: " + k.getHaltbarkeit().toString() +
-                                        " | Allergen: " + k.getAllergene() +
-                                        " | Obstsorte: " + k.getObstsorte() + "\n";
+                                return k.toString() + "\n";
                             } else {
                                 return "Fachnummer " + cakeData[0] + " hat keinen Kuchen\n";
                             }
