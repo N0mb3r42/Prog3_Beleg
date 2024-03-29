@@ -51,10 +51,6 @@ public class verkaufsAutomat implements Serializable {
         return this.herstellerListe.remove(toBeDeleted);
     }
 
-    public HashMap<Integer, KuchenImp> getLager() {
-        return lager;
-    }
-
     public verkaufsAutomat(int anzahlFaecher){
         this.anzahlFaecher = anzahlFaecher;
         this.lager = new HashMap<Integer, KuchenImp>();
