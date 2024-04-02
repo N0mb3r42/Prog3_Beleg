@@ -138,6 +138,16 @@ public class verkaufsAutomat implements Serializable {
         return this.lager.values();
     }
 
+    public Collection<KuchenImp> readKuchen(String KuchenTyp){
+        Collection<KuchenImp> kuchenListe= new ArrayList<KuchenImp>();
+        for (KuchenImp kuchen : this.lager.values()){
+            if (kuchen.getKuchenTyp() == KuchenTyp){
+                kuchenListe.add(kuchen);
+            }
+        }
+        return kuchenListe;
+    }
+
     public KuchenImp readKuchen(int fachnummer) {
         return this.lager.get(fachnummer);
     }

@@ -1,6 +1,7 @@
 import kuchen.Allergen;
 import kuchen.Obstkuchen;
 import kuchenImp.KremkuchenImp;
+import kuchenImp.KuchenImp;
 import kuchenImp.ObstkuchenImp;
 import kuchenImp.ObsttorteImp;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,8 @@ import verwaltungsImp.verkaufsAutomat;
 
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -169,7 +172,7 @@ class verkaufsAutomatTest {
     }
 
     @Test
-    void read() {
+    void readKuchen() {
         assertEquals(0, this.automat.readKuchen().size()); //wenn verwaltungsImpl.verkaufsAutomat erzeugt, dann liste leer
         this.automat.addHersteller(kuchen.getHersteller().getName());
         this.automat.addHersteller(kuchen2.getHersteller().getName());
@@ -202,10 +205,24 @@ class verkaufsAutomatTest {
                 kuchenZuViel.getAllergene(),
                 kuchenZuViel.getObstsorte(),
                 kuchenZuViel.getKremsorte()));// wenn maximaler Füllstand erreicht dann False
+        System.out.println("TEST for readKuchen() was SUCCESSFULL");
+
         assertEquals(this.automat.getAnzahlFaecher(), this.automat.readKuchen().size()); //wenn maximalie Kuchen eingefügt, dann Liste Länge maxFüllstand
         assertEquals(this.kuchen.toString(), this.automat.readKuchen(1).toString());//wenn kuchen eingfügt, dann diese kuchen in liste
         assertEquals(this.kuchen2.toString(), this.automat.readKuchen(2).toString());//wenn kuchen eingfügt, dann diese kuchen in liste
-        System.out.println("TEST: read WAS SUCCESSFULL");
+        System.out.println("TEST for readKuchen(Integer) was SUCCESSFULL");
+
+        Collection<KuchenImp> ObstkuchenListe = this.automat.readKuchen("Obstkuchen");
+        Collection<KuchenImp> KremkuchenListe = this.automat.readKuchen("Kremkuchen");
+        Collection<KuchenImp> ObsttortenListe = this.automat.readKuchen("Obsttorte");
+        assertEquals(1, ObstkuchenListe.size());
+        assertEquals(1, KremkuchenListe.size());
+        assertEquals(0, ObsttortenListe.size());
+
+        assertEquals(ObstkuchenListe.iterator().next().getHersteller().getName(), "Jannik");
+        assertEquals(KremkuchenListe.iterator().next().getHersteller().getName(), "Alice");
+        System.out.println("TEST for readKuchen(String) was SUCCESSFULL");
+        System.out.println("TEST: readKuchen WAS SUCCESSFULL");
     }
 
     @Test
@@ -217,6 +234,4 @@ class verkaufsAutomatTest {
     void deleteHersteller(){
         fail("Finish the Test!!");
     }
-
-
 }

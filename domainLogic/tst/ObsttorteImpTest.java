@@ -66,7 +66,7 @@ public class ObsttorteImpTest {
     @Test
     void getObstsorte(){
         assertEquals("Apfel", this.torte.getObstsorte());
-        System.out.println("TEST: getKremsorte WAS SUCCESSFUL");
+        System.out.println("TEST: getObstsorte WAS SUCCESSFUL");
     }
 
 }
