@@ -12,10 +12,7 @@ import verwaltungsImp.verkaufsAutomat;
 
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 class verkaufsAutomatTest {
@@ -145,6 +142,7 @@ class verkaufsAutomatTest {
 
     @Test
     void update() {
+        long unixstamp  = 1711732581000L;
         this.kuchen.setInspectionDate(this.yesterdayDate); //Set Inspektionsdatum auf gestern, um Änderung sehen zu können
         this.automat.addHersteller(kuchen.getHersteller().getName());
         this.automat.addHersteller(kuchen2.getHersteller().getName());
@@ -161,6 +159,7 @@ class verkaufsAutomatTest {
                 kuchen.getObstsorte(),
                 null)); // create Kuchen = True
         assertNotNull(this.automat.readKuchen(1)); //Kuchen ist in Fachnummer 1
+        this.automat.readKuchen(1).setInspectionDate(new Date(unixstamp));
         Date before = this.automat.readKuchen(1).getInspektionsdatum();
         assertTrue(this.automat.update(1)); //wenn Update erfolgreich dann True
         assertFalse(this.automat.update(2)); // false, wenn Fach ist leer
@@ -205,9 +204,9 @@ class verkaufsAutomatTest {
                 kuchenZuViel.getAllergene(),
                 kuchenZuViel.getObstsorte(),
                 kuchenZuViel.getKremsorte()));// wenn maximaler Füllstand erreicht dann False
+        assertEquals(this.automat.getAnzahlFaecher(), this.automat.readKuchen().size()); //wenn maximalie Kuchen eingefügt, dann Liste Länge maxFüllstand
         System.out.println("TEST for readKuchen() was SUCCESSFULL");
 
-        assertEquals(this.automat.getAnzahlFaecher(), this.automat.readKuchen().size()); //wenn maximalie Kuchen eingefügt, dann Liste Länge maxFüllstand
         assertEquals(this.kuchen.toString(), this.automat.readKuchen(1).toString());//wenn kuchen eingfügt, dann diese kuchen in liste
         assertEquals(this.kuchen2.toString(), this.automat.readKuchen(2).toString());//wenn kuchen eingfügt, dann diese kuchen in liste
         System.out.println("TEST for readKuchen(Integer) was SUCCESSFULL");
@@ -227,11 +226,83 @@ class verkaufsAutomatTest {
 
     @Test
     void addHersteller(){
-        fail("Finish the test!!");
+        assertTrue(this.automat.addHersteller("Jannik"));
+        assertFalse(this.automat.addHersteller("Jannik"));
+
+        HashMap<String, Integer> herstellerListeExpected = new HashMap<>();
+        herstellerListeExpected.put("Jannik", 0);
+
+        HashMap<String, Integer> herstellerListeActual = this.automat.getHerstellerMitKuchenAnzahl();
+        assertEquals(herstellerListeExpected.get("Jannik"), herstellerListeActual.get("Jannik"));
+        System.out.println("TEST: addHersteller WAS SUCCESSFULL");
     }
 
     @Test
     void deleteHersteller(){
-        fail("Finish the Test!!");
+        assertTrue(this.automat.addHersteller("Jannik"));
+        assertFalse(this.automat.addHersteller("Jannik"));
+
+        HashMap<String, Integer> herstellerListeExpected = new HashMap<>();
+        herstellerListeExpected.put("Jannik", 0);
+
+        HashMap<String, Integer> herstellerListeActual = this.automat.getHerstellerMitKuchenAnzahl();
+        assertEquals(herstellerListeExpected.get("Jannik"), herstellerListeActual.get("Jannik"));
+
+        assertFalse(this.automat.deleteHersteller("Bla"));
+        assertTrue(this.automat.deleteHersteller("Jannik"));
+        herstellerListeActual = this.automat.getHerstellerMitKuchenAnzahl();
+        assertNull(herstellerListeActual.get("Jannik"));
+        System.out.println("TEST: deleteHersteller WAS SUCCESSFULL");
     }
+
+    @Test
+    void getHerstellerWithKuchenAnzahl(){
+        assertTrue(this.automat.addHersteller("Jannik"));
+        assertTrue(this.automat.addHersteller("Alice"));
+        assertTrue(this.automat.addHersteller("Bob"));
+
+        HashMap<String, Integer> herstellerListeExpected = new HashMap<>();
+        herstellerListeExpected.put("Jannik", 1);
+        herstellerListeExpected.put("Alice", 1);
+        herstellerListeExpected.put("Bob", 0);
+
+        assertTrue(this.automat.create(
+                kuchen.getKuchenTyp(),
+                kuchen.getHersteller(),
+                kuchen.getPreis(),
+                kuchen.getNaehrwert(),
+                kuchen.getHaltbarkeit(),
+                kuchen.getAllergene(),
+                kuchen.getObstsorte(),
+                null));
+
+        assertTrue(this.automat.create(
+                kuchen2.getKuchenTyp(),
+                kuchen2.getHersteller(),
+                kuchen2.getPreis(),
+                kuchen2.getNaehrwert(),
+                kuchen2.getHaltbarkeit(),
+                kuchen2.getAllergene(),
+                null,
+                kuchen2.getKremsorte()));
+
+        assertFalse(this.automat.create(
+                kuchenZuViel.getKuchenTyp(),
+                kuchenZuViel.getHersteller(),
+                kuchenZuViel.getPreis(),
+                kuchenZuViel.getNaehrwert(),
+                kuchenZuViel.getHaltbarkeit(),
+                kuchenZuViel.getAllergene(),
+                kuchenZuViel.getObstsorte(),
+                kuchenZuViel.getKremsorte()));
+
+        HashMap<String, Integer> herstellerListeActual = this.automat.getHerstellerMitKuchenAnzahl();
+
+        assertEquals(herstellerListeExpected.get("Jannik"), herstellerListeActual.get("Jannik"));
+        assertEquals(herstellerListeExpected.get("Alice"), herstellerListeActual.get("Alice"));
+        assertEquals(herstellerListeExpected.get("Bob"), herstellerListeActual.get("Bob"));
+
+        System.out.println("TEST: getHerstellerWithKuchenAnzahl was SUCCESSFULL");
+    }
+
 }

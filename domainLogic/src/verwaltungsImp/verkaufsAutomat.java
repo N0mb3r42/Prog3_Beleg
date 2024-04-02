@@ -41,6 +41,23 @@ public class verkaufsAutomat implements Serializable {
         return false;
     }
 
+    public HashMap<String, Integer> getHerstellerMitKuchenAnzahl(){
+        HashMap<String, Integer> herstellerMap = new HashMap<>();
+
+        for (HerstellerImp hersteller: this.herstellerListe) {
+            String hName = hersteller.getName();
+            herstellerMap.putIfAbsent(hName, 0);
+        }
+        for (KuchenImp kuchen : this.lager.values()) {
+            String kName = kuchen.getHersteller().getName();
+            Integer value = herstellerMap.get(kName);
+            if (value != null){
+                herstellerMap.put(kName, value + 1);
+            }
+        }
+
+        return herstellerMap;
+    }
     public boolean deleteHersteller(String nameHersteller){
         HerstellerImp toBeDeleted = null;
         for (HerstellerImp hersteller : this.herstellerListe){
@@ -141,7 +158,7 @@ public class verkaufsAutomat implements Serializable {
     public Collection<KuchenImp> readKuchen(String KuchenTyp){
         Collection<KuchenImp> kuchenListe= new ArrayList<KuchenImp>();
         for (KuchenImp kuchen : this.lager.values()){
-            if (kuchen.getKuchenTyp() == KuchenTyp){
+            if (Objects.equals(kuchen.getKuchenTyp(), KuchenTyp)){
                 kuchenListe.add(kuchen);
             }
         }
