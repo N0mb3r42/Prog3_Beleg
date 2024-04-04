@@ -53,7 +53,7 @@ public class CreateKuchenThread extends Thread{
                             (kuchenTypString.equals("Kremkuchen") || kuchenTypString.equals("Obsttorte")) ? kremSorte[getRandomInt(0, kremSorte.length - 1)] : null
                     );
                     if (returnvalue){
-                        System.out.println("Fachnummer: " + freeSlot + " | Kuchen wurde hinzugefügt | from Thread: " + Thread.currentThread().threadId());
+                        System.out.println("Fachnummer: " + freeSlot + "\t| Kuchen wurde hinzugefügt | from Thread: " + Thread.currentThread().threadId());
                     }else{
                         System.out.println("Kuchen konnte nicht created werden | from Thread: " + Thread.currentThread().threadId());
                     }

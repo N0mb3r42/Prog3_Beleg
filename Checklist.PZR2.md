@@ -47,7 +47,7 @@ Ergänzende Anmerkungen bitte immer _kursiv_ setzen. Andere Änderungen sind nic
 - [x] **CRUD** (2)
 - [ ] **CLI** (2)
   * Syntax gemäß Anforderungen
-- [ ] **Simulation** (2)
+- [x] **Simulation** (2)
   * ohne race conditions
 - [ ] **GUI** (2)
 - [ ] **I/O** (2)

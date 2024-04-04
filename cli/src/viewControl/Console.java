@@ -11,6 +11,7 @@ import util.Command;
 import verwaltungsImp.HerstellerImp;
 import verwaltungsImp.verkaufsAutomat;
 import kuchen.Allergen;
+import io.Serializer;
 
 public class Console {
     private verkaufsAutomat automat;
@@ -47,6 +48,21 @@ public class Console {
             }
         }
 
+    }
+    private String performPersitance(String userInput){
+        switch (userInput) {
+            case "saveJOS" -> {
+                Serializer.serializer("JOSvk.txt", this.automat);
+                return "Saved with JOS";
+            }
+            case "loadJOS" -> {
+                this.automat = (verkaufsAutomat) Serializer.deserialize("JOSvk.txt");
+                return "Loaded with JOS";
+            }
+            default -> {
+                return "no fitting Input [saveJOS, loadJOS, saveJBP, loadJBP]";
+            }
+        }
     }
     public void execute() {
         try (Scanner s = new Scanner(System.in)) {
@@ -185,7 +201,7 @@ public class Console {
                             }
                         }
                         case PERSIST -> {
-
+                            System.out.println(this.performPersitance(cakeData[0]));
                         }
                         case NOMODE -> System.out.println("No Mode selected");
                     }

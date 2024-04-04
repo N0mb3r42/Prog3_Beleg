@@ -27,7 +27,7 @@ public class DeleteKuchenThread extends Thread{
                 }
                 boolean returnvalue = this.automat.delete(kuchen.get(0).getFachnummer());
                 if (returnvalue){
-                    System.out.println("Fachnummer: " + kuchen.get(0).getFachnummer() + " | Kuchen wurde erfolgreich gelöscht | from Thread: " + Thread.currentThread().threadId());
+                    System.out.println("Fachnummer: " + kuchen.get(0).getFachnummer() + "\t| Kuchen wurde erfolgreich gelöscht | from Thread: " + Thread.currentThread().threadId());
                 }else{
                     System.out.println("Kuchen konnte nicht gelöscht werden | from Thread: " + Thread.currentThread().threadId());
                 }
