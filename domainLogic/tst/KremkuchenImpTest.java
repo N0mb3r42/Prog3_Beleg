@@ -47,7 +47,7 @@ public class KremkuchenImpTest {
                 "Hersteller: Alice | " +
                 "Preis: 4 | " +
                 "Nährwert: 300 | " +
-                "Haltbarkeit: PT48H | " +
+                "verbleibende Haltbarkeit: 2 Tage | " +
                 "Allergen: [Erdnuss] | " +
                 "Kremsorte: Sahne | " +
                 "Inspektionsdatum: Fri Mar 29 18:16:21 CET 2024";

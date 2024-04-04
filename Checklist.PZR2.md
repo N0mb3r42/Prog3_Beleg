@@ -6,9 +6,9 @@ Die empfohlenen Realisierungen sind **fett** gesetzt und ergeben 47 Punkte.
 Ergänzende Anmerkungen bitte immer _kursiv_ setzen. Andere Änderungen sind nicht zulässig.
 
 ## Vorrausetzungen für das Bestehen
-- [ ] Quellen angegeben
-- [ ] zip Archiv mit dem Projekt im root
-- [ ] IntelliJ-Projekt (kein Gradle, Maven o.ä.)
+- [x] Quellen angegeben
+- [x] zip Archiv mit dem Projekt im root
+- [x] IntelliJ-Projekt (kein Gradle, Maven o.ä.)
 - [ ] keine weiteren Bibliotheken außer JUnit5, Mockito und JavaFX
 - [ ] keine Umlaute, Sonderzeichen, etc. in Datei- und Pfadnamen
 - [ ] mindestens sechs modules (zu jeder Basisfunktionalität außer I/O + belegProg3)
@@ -56,7 +56,7 @@ Ergänzende Anmerkungen bitte immer _kursiv_ setzen. Andere Änderungen sind nic
 
 ## Funktionalität (23)
 - [x] vollständige GL (2)
-- [ ] threadsichere GL (1)
+- [x] threadsichere GL (1)
 - [ ] vollständiges CLI (1)
 - [ ] alternatives CLI (1)
   * _angeben welche Funktionalität im alternativen CLI deaktiviert_

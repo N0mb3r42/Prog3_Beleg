@@ -8,6 +8,7 @@ import verwaltungsImp.HerstellerImp;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,7 @@ public class KuchenImp implements Kuchen, Verkaufsobjekt, Serializable {
     protected final Duration Haltbarkeit;
     protected final BigDecimal Preis;
     protected String KuchenTyp;
+    protected Date ErstellungsDatum;
 
     public KuchenImp(int fachnummer, Date InspectionDate, HerstellerImp hersteller, BigDecimal preis, int naehrwert, Duration haltbarkeit, List<Allergen> allergene) {
         this.Fachnummer = fachnummer;
@@ -32,6 +34,7 @@ public class KuchenImp implements Kuchen, Verkaufsobjekt, Serializable {
         this.Haltbarkeit = haltbarkeit;
         this.Allergene = allergene;
         this.KuchenTyp = "Kuchen";
+        this.ErstellungsDatum = new Date();
     }
     public void setInspectionDate(Date inspectionDate) {
         InspectionDate = inspectionDate;
@@ -48,9 +51,15 @@ public class KuchenImp implements Kuchen, Verkaufsobjekt, Serializable {
                 " | Hersteller: " + this.Hersteller.getName() +
                 " | Preis: " + this.Preis +
                 " | Nährwert: " + this.Naehrwert +
-                " | Haltbarkeit: " + this.Haltbarkeit.toString() +
+                " | verbleibende Haltbarkeit: " + this.getRemainingHaltbarkeit().toDays() + ((this.getRemainingHaltbarkeit().toDays() == 1L) ? " Tag" : " Tage") +
                 " | Allergen: " + this.Allergene +
                 " | Inspektionsdatum: " + this.InspectionDate.toString();
+    }
+
+    public Duration getRemainingHaltbarkeit(){
+        Date heute = new Date();
+        Duration verbrauchteHaltbarkeit = Duration.between(this.ErstellungsDatum.toInstant(), heute.toInstant());
+        return Duration.ofDays(this.Haltbarkeit.minus(verbrauchteHaltbarkeit).toDaysPart());
     }
     @Override
     public HerstellerImp getHersteller() {

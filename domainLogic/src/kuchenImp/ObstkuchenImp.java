@@ -29,7 +29,7 @@ public class ObstkuchenImp extends KuchenImp implements Obstkuchen, Serializable
                 " | Hersteller: " + this.Hersteller.getName() +
                 " | Preis: " + this.Preis +
                 " | Nährwert: " + this.Naehrwert +
-                " | Haltbarkeit: " + this.Haltbarkeit.toString() +
+                " | verbleibende Haltbarkeit: " + this.getRemainingHaltbarkeit().toDays() + ((this.getRemainingHaltbarkeit().toDays() == 1L) ? " Tag" : " Tage") +
                 " | Allergen: " + this.Allergene +
                 " | Obstsorte: " + this.Obstsorte +
                 " | Inspektionsdatum: " + this.InspectionDate.toString();

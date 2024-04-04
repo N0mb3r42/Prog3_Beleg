@@ -28,7 +28,7 @@ public class KremkuchenImp extends KuchenImp implements Kremkuchen, Serializable
                 " | Hersteller: " + this.Hersteller.getName() +
                 " | Preis: " + this.Preis +
                 " | Nährwert: " + this.Naehrwert +
-                " | Haltbarkeit: " + this.Haltbarkeit.toString() +
+                " | verbleibende Haltbarkeit: " + this.getRemainingHaltbarkeit().toDays() + ((this.getRemainingHaltbarkeit().toDays() == 1L) ? " Tag" : " Tage") +
                 " | Allergen: " + this.Allergene +
                 " | Kremsorte: " + this.Kremsorte +
                 " | Inspektionsdatum: " + this.InspectionDate.toString();

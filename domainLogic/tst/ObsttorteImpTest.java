@@ -48,7 +48,7 @@ public class ObsttorteImpTest {
                 "Hersteller: Alice | " +
                 "Preis: 4 | " +
                 "Nährwert: 300 | " +
-                "Haltbarkeit: PT48H | " +
+                "verbleibende Haltbarkeit: 2 Tage | " +
                 "Allergen: [Erdnuss] | " +
                 "Kremsorte: Sahne | " +
                 "Obstsorte: Apfel | " +
