@@ -47,7 +47,7 @@ public class KuchenImpTest {
                 "Hersteller: Alice | " +
                 "Preis: 4 | " +
                 "Nährwert: 300 | " +
-                "verbleibende Haltbarkeit: 1 Tag | " +
+                "verbleibende Haltbarkeit: 2 Tage | " +
                 "Allergen: [Erdnuss] | " +
                 "Inspektionsdatum: Fri Mar 29 18:16:21 CET 2024";
         assertEquals(kuchenString, this.torte.toString());

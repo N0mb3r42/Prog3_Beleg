@@ -23,7 +23,7 @@ public class KuchenImp implements Kuchen, Verkaufsobjekt, Serializable {
     protected final Duration Haltbarkeit;
     protected final BigDecimal Preis;
     protected String KuchenTyp;
-    protected Date ErstellungsDatum;
+    protected LocalDate ErstellungsDatum;
 
     public KuchenImp(int fachnummer, Date InspectionDate, HerstellerImp hersteller, BigDecimal preis, int naehrwert, Duration haltbarkeit, List<Allergen> allergene) {
         this.Fachnummer = fachnummer;
@@ -34,7 +34,7 @@ public class KuchenImp implements Kuchen, Verkaufsobjekt, Serializable {
         this.Haltbarkeit = haltbarkeit;
         this.Allergene = allergene;
         this.KuchenTyp = "Kuchen";
-        this.ErstellungsDatum = new Date();
+        this.ErstellungsDatum = LocalDate.now();
     }
     public void setInspectionDate(Date inspectionDate) {
         InspectionDate = inspectionDate;
@@ -56,10 +56,10 @@ public class KuchenImp implements Kuchen, Verkaufsobjekt, Serializable {
                 " | Inspektionsdatum: " + this.InspectionDate.toString();
     }
 
-    public Duration getRemainingHaltbarkeit(){
-        Date heute = new Date();
-        Duration verbrauchteHaltbarkeit = Duration.between(this.ErstellungsDatum.toInstant(), heute.toInstant());
-        return Duration.ofDays(this.Haltbarkeit.minus(verbrauchteHaltbarkeit).toDaysPart());
+    protected Duration getRemainingHaltbarkeit(){
+        LocalDate heute = LocalDate.now();
+        Duration verbrauchteHaltbarkeit = Duration.between(this.ErstellungsDatum.atStartOfDay(), heute.atStartOfDay());
+        return Duration.ofDays(this.Haltbarkeit.minus(verbrauchteHaltbarkeit).toDays());
     }
     @Override
     public HerstellerImp getHersteller() {
