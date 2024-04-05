@@ -14,7 +14,7 @@ Ergänzende Anmerkungen bitte immer _kursiv_ setzen. Andere Änderungen sind nic
 - [ ] mindestens sechs modules (zu jeder Basisfunktionalität außer I/O + belegProg3)
 - [ ] Trennung zwischen Test- und Produktiv-Code
 - [ ] kompilierbar
-- [ ] geforderte main-Methoden nur im default package des module belegProg3
+- [x] geforderte main-Methoden nur im default package des module belegProg3
 - [ ] keine vorgetäuschte Funktionalität
 
 ## Entwurf (10)
@@ -41,18 +41,18 @@ Ergänzende Anmerkungen bitte immer _kursiv_ setzen. Andere Änderungen sind nic
 
 ## Fehlerfreiheit (10)
 - [ ] **Kapselung** (5)
-- [ ] **keine Ablauffehler** (5)
+- [x] **keine Ablauffehler** (5)
 
 ## Basisfunktionalität (12)
 - [x] **CRUD** (2)
-- [ ] **CLI** (2)
+- [x] **CLI** (2)
   * Syntax gemäß Anforderungen
 - [x] **Simulation** (2)
   * ohne race conditions
-- [ ] **GUI** (2)
-- [ ] **I/O** (2)
+- [x] **GUI** (2)
+- [x] **I/O** (2)
   * in CLI oder GUI integriert
-- [ ] **Net** (2)
+- [x] **Net** (2)
 
 ## Funktionalität (23)
 - [x] vollständige GL (2)

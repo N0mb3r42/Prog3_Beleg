@@ -148,9 +148,11 @@ public class Console {
                                 } else if (cakeData[0].contains("allergene")) {
                                     ArrayList<Allergen> allergeneList = new ArrayList<>();
                                     for (KuchenImp k: this.automat.readKuchen()){
-                                        for (Allergen a: k.getAllergene()){
-                                            if (!allergeneList.contains(a)){
-                                                allergeneList.add(a);
+                                        if (k.getAllergene() != null){
+                                            for (Allergen a: k.getAllergene()){
+                                                if (!allergeneList.contains(a)){
+                                                    allergeneList.add(a);
+                                                }
                                             }
                                         }
                                     }

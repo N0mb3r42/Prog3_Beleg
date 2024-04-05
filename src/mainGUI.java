@@ -19,10 +19,10 @@ public class mainGUI extends Application {
         URL path = view.getClass().getResource("GUI.fxml");
         System.out.println(path);
         Parent root = FXMLLoader.load(path);
-        //System.out.println(this.getParameters().getRaw());
         primaryStage.setTitle("GUI");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+
     }
     public static void main(String[] args) {launch(args);}
 }
