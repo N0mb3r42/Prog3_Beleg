@@ -45,7 +45,7 @@ public class ObstkuchenImpTest {
                 "Fachnummer: -1 | " +
                 "KuchenTyp: Obstkuchen | " +
                 "Hersteller: Alice | " +
-                "Preis: 4 | " +
+                "Preis: 4.0 | " +
                 "Nährwert: 300 | " +
                 "verbleibende Haltbarkeit: 2 Tage | " +
                 "Allergen: [Erdnuss] | " +

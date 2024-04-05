@@ -45,7 +45,7 @@ public class KuchenImpTest {
                 "Fachnummer: -1 | " +
                 "KuchenTyp: Kuchen | " +
                 "Hersteller: Alice | " +
-                "Preis: 4 | " +
+                "Preis: 4.0 | " +
                 "Nährwert: 300 | " +
                 "verbleibende Haltbarkeit: 2 Tage | " +
                 "Allergen: [Erdnuss] | " +

@@ -8,6 +8,7 @@ import verwaltungsImp.HerstellerImp;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
@@ -49,7 +50,7 @@ public class KuchenImp implements Kuchen, Verkaufsobjekt, Serializable {
         return "Fachnummer: " + this.Fachnummer +
                 " | KuchenTyp: " + this.KuchenTyp +
                 " | Hersteller: " + this.Hersteller.getName() +
-                " | Preis: " + this.Preis +
+                " | Preis: " + this.Preis.doubleValue() +
                 " | Nährwert: " + this.Naehrwert +
                 " | verbleibende Haltbarkeit: " + this.getRemainingHaltbarkeit().toDays() + ((this.getRemainingHaltbarkeit().toDays() == 1L) ? " Tag" : " Tage") +
                 " | Allergen: " + this.Allergene +
@@ -63,12 +64,15 @@ public class KuchenImp implements Kuchen, Verkaufsobjekt, Serializable {
     }
     @Override
     public HerstellerImp getHersteller() {
-        return this.Hersteller;
+        return new HerstellerImp(this.Hersteller.getName());
     }
 
     @Override
     public List<Allergen> getAllergene() {
-        return this.Allergene;
+        if (this.Allergene == null){
+            return null;
+        }
+        return List.copyOf(this.Allergene);
     }
 
     @Override
@@ -78,17 +82,18 @@ public class KuchenImp implements Kuchen, Verkaufsobjekt, Serializable {
 
     @Override
     public Duration getHaltbarkeit() {
-        return this.Haltbarkeit;
+        return Duration.ofDays(this.Haltbarkeit.toDays());
     }
 
     @Override
     public BigDecimal getPreis() {
-        return this.Preis;
+        return BigDecimal.valueOf(this.Preis.floatValue());
     }
 
     @Override
     public Date getInspektionsdatum() {
-        return this.InspectionDate;
+        Instant dateString = this.InspectionDate.toInstant();
+        return Date.from(dateString);
     }
 
     @Override

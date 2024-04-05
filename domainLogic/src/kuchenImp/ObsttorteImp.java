@@ -28,7 +28,7 @@ public class ObsttorteImp extends KuchenImp implements Obsttorte, Serializable {
         return "Fachnummer: " + this.Fachnummer +
                 " | KuchenTyp: " + this.KuchenTyp +
                 " | Hersteller: " + this.Hersteller.getName() +
-                " | Preis: " + this.Preis +
+                " | Preis: " + this.Preis.doubleValue() +
                 " | Nährwert: " + this.Naehrwert +
                 " | verbleibende Haltbarkeit: " + this.getRemainingHaltbarkeit().toDays() + ((this.getRemainingHaltbarkeit().toDays() == 1L) ? " Tag" : " Tage") +
                 " | Allergen: " + this.Allergene +
