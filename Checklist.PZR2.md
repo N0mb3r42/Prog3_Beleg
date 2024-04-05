@@ -9,19 +9,19 @@ Ergänzende Anmerkungen bitte immer _kursiv_ setzen. Andere Änderungen sind nic
 - [x] Quellen angegeben
 - [x] zip Archiv mit dem Projekt im root
 - [x] IntelliJ-Projekt (kein Gradle, Maven o.ä.)
-- [ ] keine weiteren Bibliotheken außer JUnit5, Mockito und JavaFX
-- [ ] keine Umlaute, Sonderzeichen, etc. in Datei- und Pfadnamen
-- [ ] mindestens sechs modules (zu jeder Basisfunktionalität außer I/O + belegProg3)
-- [ ] Trennung zwischen Test- und Produktiv-Code
-- [ ] kompilierbar
+- [x] keine weiteren Bibliotheken außer JUnit5, Mockito und JavaFX
+- [x] keine Umlaute, Sonderzeichen, etc. in Datei- und Pfadnamen
+- [x] mindestens sechs modules (zu jeder Basisfunktionalität außer I/O + belegProg3)
+- [x] Trennung zwischen Test- und Produktiv-Code
+- [x] kompilierbar
 - [x] geforderte main-Methoden nur im default package des module belegProg3
-- [ ] keine vorgetäuschte Funktionalität
+- [x] keine vorgetäuschte Funktionalität
 
 ## Entwurf (10)
-- [ ] **Benennung** (2)
-- [ ] **Zuständigkeit** (2)
-- [ ] **Paketierung** (2)
-- [ ] Schichtenaufteilung (2)
+- [x] **Benennung** (2)
+- [x] **Zuständigkeit** (2)
+- [x] **Paketierung** (2)
+- [x] Schichtenaufteilung (2)
 - [ ] Architekturdiagramm (1)
 - [ ] keine Duplikate (1)
 
@@ -40,7 +40,7 @@ Ergänzende Anmerkungen bitte immer _kursiv_ setzen. Andere Änderungen sind nic
 - [x] **keine unbeabsichtigt fehlschlagenden Test** (1)
 
 ## Fehlerfreiheit (10)
-- [ ] **Kapselung** (5)
+- [x] **Kapselung** (5)
 - [x] **keine Ablauffehler** (5)
 
 ## Basisfunktionalität (12)

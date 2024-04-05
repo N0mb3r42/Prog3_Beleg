@@ -7,6 +7,8 @@ import kuchenImp.ObsttorteImp;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import verwaltungsImp.HerstellerImp;
 import verwaltungsImp.verkaufsAutomat;
 
@@ -15,6 +17,8 @@ import java.time.Duration;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 class verkaufsAutomatTest {
     private verkaufsAutomat automat;
     private ObstkuchenImp kuchen;
@@ -25,11 +29,11 @@ class verkaufsAutomatTest {
 
     @BeforeEach
     void setUp() {
-        this.automat = new verkaufsAutomat(2);
-        this.kuchen = new ObstkuchenImp(1, new Date(), new HerstellerImp("Jannik"), new BigDecimal("4.50"), 365, Duration.ofDays(7), List.of(Allergen.Erdnuss), "Erddbeere1");
-        this.kuchen2 = new KremkuchenImp(2, new Date(), new HerstellerImp("Alice"), new BigDecimal("4.50"), 365, Duration.ofDays(7),List.of(Allergen.Erdnuss), "Sahne2");
-        this.kuchenZuViel = new ObsttorteImp(-1, new Date(), new HerstellerImp("Bob"), new BigDecimal("4.50"), 365, Duration.ofDays(7),List.of(Allergen.Erdnuss, Allergen.Sesamsamen), "Sahne", "Apfel");
         this.todayDate = new Date();
+        this.automat = new verkaufsAutomat(2);
+        this.kuchen = new ObstkuchenImp(1, this.todayDate, new HerstellerImp("Jannik"), new BigDecimal("4.50"), 365, Duration.ofDays(7), null, "Erddbeere1");
+        this.kuchen2 = new KremkuchenImp(2, this.todayDate, new HerstellerImp("Alice"), new BigDecimal("4.50"), 365, Duration.ofDays(7),List.of(Allergen.Erdnuss), "Sahne2");
+        this.kuchenZuViel = new ObsttorteImp(-1, this.todayDate, new HerstellerImp("Bob"), new BigDecimal("4.50"), 365, Duration.ofDays(7),List.of(Allergen.Erdnuss, Allergen.Sesamsamen), "Sahne", "Apfel");
         this.yesterdayDate = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
     }
 
@@ -164,8 +168,7 @@ class verkaufsAutomatTest {
         assertTrue(this.automat.update(1)); //wenn Update erfolgreich dann True
         assertFalse(this.automat.update(2)); // false, wenn Fach ist leer
         Date after = this.automat.readKuchen(1).getInspektionsdatum();
-        assertNotEquals(before, after); //Inspektionsdatum wurde geändert → Bei Test auf heutiges Datum, schlägt manchmal fehl, obwohl richtig
-        //TODO Fix Date Assert... Its can fail when Programm is perfectly fast
+        assertNotEquals(before, after); //Inspektionsdatum wurde geändert
         System.out.println("TEST: update WAS SUCCESSFULL");
 
     }
@@ -214,6 +217,9 @@ class verkaufsAutomatTest {
         Collection<KuchenImp> ObstkuchenListe = this.automat.readKuchen("Obstkuchen");
         Collection<KuchenImp> KremkuchenListe = this.automat.readKuchen("Kremkuchen");
         Collection<KuchenImp> ObsttortenListe = this.automat.readKuchen("Obsttorte");
+        ObstkuchenListe.clear();
+        ObstkuchenListe = this.automat.readKuchen("Obstkuchen");
+        assertNotNull(ObstkuchenListe);
         assertEquals(1, ObstkuchenListe.size());
         assertEquals(1, KremkuchenListe.size());
         assertEquals(0, ObsttortenListe.size());
@@ -240,7 +246,7 @@ class verkaufsAutomatTest {
     @Test
     void deleteHersteller(){
         assertTrue(this.automat.addHersteller("Jannik"));
-        assertFalse(this.automat.addHersteller("Jannik"));
+        assertFalse(this.automat.addHersteller("Jannik"));// keine Hersteller Doppelt
 
         HashMap<String, Integer> herstellerListeExpected = new HashMap<>();
         herstellerListeExpected.put("Jannik", 0);

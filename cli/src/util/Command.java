@@ -38,7 +38,6 @@ public class Command {
                 default -> {
                     return "Command not known!\n";
                 }
-                //TODO: Persitance Mode when needed
             }
         }
         return null;

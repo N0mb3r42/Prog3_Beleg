@@ -13,6 +13,6 @@ public class HerstellerImp implements Hersteller, Serializable {
     }
 
     public String getName(){
-        return this.name;
+        return String.valueOf(this.name);
     }
 }

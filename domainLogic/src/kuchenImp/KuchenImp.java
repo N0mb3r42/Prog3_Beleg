@@ -92,8 +92,7 @@ public class KuchenImp implements Kuchen, Verkaufsobjekt, Serializable {
 
     @Override
     public Date getInspektionsdatum() {
-        Instant dateString = this.InspectionDate.toInstant();
-        return Date.from(dateString);
+        return Date.from(this.InspectionDate.toInstant());
     }
 
     @Override
@@ -101,5 +100,5 @@ public class KuchenImp implements Kuchen, Verkaufsobjekt, Serializable {
         return this.Fachnummer;
     }
 
-    public String getKuchenTyp(){return this.KuchenTyp;}
+    public String getKuchenTyp(){return String.valueOf(this.KuchenTyp);}
 }

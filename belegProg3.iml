@@ -15,5 +15,6 @@
     <orderEntry type="library" name="lib" level="application" />
     <orderEntry type="module" module-name="io" />
     <orderEntry type="module" module-name="net" />
+    <orderEntry type="library" scope="TEST" name="mockito.core" level="project" />
   </component>
 </module>

@@ -74,7 +74,6 @@ public class verkaufsAutomat implements Serializable {
         this.herstellerListe = new ArrayList<HerstellerImp>();
     }
     public Boolean create(String kuchenTyp, HerstellerImp hersteller, BigDecimal preis, int naehrwert, Duration haltbarkeit, List<Allergen> alList, String obstsorte, String kremesorte) {
-        //TODO: Add Generic Kuchen
         if (Objects.equals(kuchenTyp, "Obstkuchen")){
             return this.create(new ObstkuchenImp(
                     -1,
@@ -152,7 +151,7 @@ public class verkaufsAutomat implements Serializable {
     }
 
     public Collection<KuchenImp> readKuchen(){
-        return this.lager.values();
+        return new ArrayList<>(lager.values());
     }
 
     public Collection<KuchenImp> readKuchen(String KuchenTyp){

@@ -15,8 +15,10 @@ import io.Serializer;
 
 public class Console {
     private verkaufsAutomat automat;
+    private boolean run;
     public Console(verkaufsAutomat automat){
         this.automat=automat;
+        this.run = true;
     }
     private List<Allergen> parseAllergene(String[] text){
         List<Allergen> allergene = new ArrayList<>();
@@ -64,10 +66,10 @@ public class Console {
             }
         }
     }
-    public String createInputHandling(String[] cakeData){
+    public String createInputHandling(String[] cakeData, verkaufsAutomat automat){
         if (cakeData.length == 1) {
             HerstellerImp hersteller = new HerstellerImp(cakeData[0]);
-            boolean response = this.automat.addHersteller(hersteller.getName());
+            boolean response = automat.addHersteller(hersteller.getName());
             if (response){
                 return "Hersteller: " +  hersteller.getName() + " added!";
             }else{
@@ -84,7 +86,7 @@ public class Console {
                     allergene = this.parseAllergene(cakeData[5].split(","));
                 }
                 //this.automat.addHersteller(hersteller.getName());
-                boolean response = this.automat.create(
+                boolean response = automat.create(
                         cakeData[0],
                         hersteller,
                         preis,
@@ -106,11 +108,11 @@ public class Console {
         }
     }
 
-    public String readInputHandling(String[] cakeData){
+    public String readInputHandling(String[] cakeData, verkaufsAutomat automat){
         try {
             if (cakeData[0].contains("hersteller")) {
-                System.out.println("Anzeige aller Hersteller mit Anzahl ihrer Kuchen:");
                 StringBuilder herstellerString = new StringBuilder();
+                herstellerString.append("Anzeige aller Hersteller mit Anzahl ihrer Kuchen:\n");
                 for(Map.Entry<String, Integer> entry : automat.getHerstellerMitKuchenAnzahl().entrySet()) {
                     String hersteller = entry.getKey();
                     Integer anzahl = entry.getValue();
@@ -123,9 +125,9 @@ public class Console {
                 StringBuilder kuchenString = new StringBuilder();
                 if (cakeData.length > 1){
                     for (int i = 1; i < cakeData.length; i++ )
-                        kuchenListe.addAll(this.automat.readKuchen(cakeData[i]));
+                        kuchenListe.addAll(automat.readKuchen(cakeData[i]));
                 }else{
-                    kuchenListe.addAll(this.automat.readKuchen());
+                    kuchenListe.addAll(automat.readKuchen());
                 }
                 if (kuchenListe.size() != 0){
                     for (KuchenImp k : kuchenListe){
@@ -138,7 +140,7 @@ public class Console {
             } else if (cakeData[0].contains("allergene")) {
                 ArrayList<Allergen> allergeneList = new ArrayList<>();
                 StringBuilder allergeneString = new StringBuilder();
-                for (KuchenImp k: this.automat.readKuchen()){
+                for (KuchenImp k: automat.readKuchen()){
                     if (k.getAllergene() != null){
                         for (Allergen a: k.getAllergene()){
                             if (!allergeneList.contains(a)){
@@ -166,9 +168,9 @@ public class Console {
             return this.printException(e, Command.Mode.READ);
         }
     }
-    public String updateInputHandling(String[] cakeData){
+    public String updateInputHandling(String[] cakeData, verkaufsAutomat automat){
         try {
-            if (this.automat.update(Integer.parseInt(cakeData[0]))) {
+            if (automat.update(Integer.parseInt(cakeData[0]))) {
                 return "Das Inspektionsdatum des Kuchen in Fachnummer: " + cakeData[0] + " wurde auf heute gesetzt.";
             } else {
                 return "In Fachnummer: " + cakeData[0] + " befindet sich kein Kuchen.";
@@ -177,15 +179,15 @@ public class Console {
             return this.printException(e, Command.Mode.UPDATE);
         }
     }
-    public String deleteInputHandling(String[] cakeData){
+    public String deleteInputHandling(String[] cakeData, verkaufsAutomat automat){
         try {
-            if (this.automat.delete(Integer.parseInt(cakeData[0]))) {
+            if (automat.delete(Integer.parseInt(cakeData[0]))) {
                 return "Der Kuchen in Fachnummer: " + cakeData[0] + " wurde entfernt.";
             } else {
                 return "In Fachnummer: " + cakeData[0] + " befindet sich kein Kuchen.";
             }
         } catch (NumberFormatException e) {
-            if (this.automat.deleteHersteller(cakeData[0])){
+            if (automat.deleteHersteller(cakeData[0])){
                 return "Der Hersteller: " + cakeData[0] + " wurde gelöscht.";
             }else{
                 return "Der Hersteller: " + cakeData[0] + " existiert nicht.";
@@ -198,28 +200,28 @@ public class Console {
         try (Scanner s = new Scanner(System.in)) {
             Command c = new Command();
 
-            while (true){
+            while (this.run){
                 System.out.println(c.getMode() + " -- What do you want to do?:");
                 String input = s.nextLine();
                 if (input.startsWith(":")){
                     System.out.println(c.nextCommand(input));
                     if (input.startsWith(":e")){
-                        System.exit(0);
+                        this.run = false;
                     }
                 }else{
                     String[] cakeData = input.split(" ");
                     switch (c.getMode()) {
                         case CREATE -> { //Obstkuchen Alice 4,50 386 36 Gluten,Erdnuss Apfel
-                            System.out.println(this.createInputHandling(cakeData));
+                            System.out.println(this.createInputHandling(cakeData, this.automat));
                         }
                         case READ -> {
-                            System.out.println(this.readInputHandling(cakeData));
+                            System.out.println(this.readInputHandling(cakeData, this.automat));
                         }
                         case UPDATE -> {
-                            System.out.println(this.updateInputHandling(cakeData));
+                            System.out.println(this.updateInputHandling(cakeData, this.automat));
                         }
                         case DELETE -> {
-                            System.out.println(this.deleteInputHandling(cakeData));
+                            System.out.println(this.deleteInputHandling(cakeData, this.automat));
                         }
                         case PERSIST -> {
                             System.out.println(this.performPersitance(cakeData[0]));

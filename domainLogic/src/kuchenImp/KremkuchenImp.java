@@ -36,6 +36,6 @@ public class KremkuchenImp extends KuchenImp implements Kremkuchen, Serializable
 
     @Override
     public String getKremsorte() {
-        return this.Kremsorte;
+        return String.valueOf(this.Kremsorte);
     }
 }

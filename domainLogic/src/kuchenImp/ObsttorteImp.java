@@ -39,10 +39,10 @@ public class ObsttorteImp extends KuchenImp implements Obsttorte, Serializable {
 
     @Override
     public String getKremsorte() {
-        return this.Kremsorte;
+        return String.valueOf(this.Kremsorte);
     }
     @Override
     public String getObstsorte() {
-        return this.Obstsorte;
+        return String.valueOf(this.Obstsorte);
     }
 }
