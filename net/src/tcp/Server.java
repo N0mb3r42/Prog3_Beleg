@@ -17,33 +17,20 @@ import util.Command;
 import verwaltungsImp.HerstellerImp;
 import verwaltungsImp.verkaufsAutomat;
 import kuchen.Allergen;
-
+import viewControl.Console;
 
 
 public class Server{
     private int port;
     private verkaufsAutomat automat;
     private Command c;
+    private Console console;
 
     public Server(int port, int kapazitaet) {
         this.port = port;
         this.automat = new verkaufsAutomat(kapazitaet);
         this.c = new Command();
-    }
-
-    private List<Allergen> parseAllergene(String[] text) {
-        List<Allergen> allergene = new ArrayList<>();
-        if (Objects.equals(text[0], "")) {
-            return null;
-        }
-        for (String s : text) {
-            for (Allergen a : Allergen.values()) {
-                if (a.name().equals(s)) {
-                    allergene.add(a);
-                }
-            }
-        }
-        return allergene;
+        this.console = new Console(this.automat);
     }
     private String printException(Exception e, Command.Mode mode){
         switch (mode) {
@@ -67,82 +54,16 @@ public class Server{
             System.out.println(cakeData);
             switch (c.getMode()) {
                 case CREATE -> { //Obstkuchen Alice 4,50 386 36 Gluten,Erdnuss Apfel
-                    if (cakeData.length == 1) {
-                        HerstellerImp hersteller = new HerstellerImp(cakeData[0]);
-                        this.automat.addHersteller(hersteller.getName());
-                    } else {
-                        try {
-                            HerstellerImp hersteller = new HerstellerImp(cakeData[1]);
-                            BigDecimal preis = new BigDecimal(cakeData[2].replace(",", "."));
-                            int naehrwert = Integer.parseInt(cakeData[3]);
-                            Duration haltbarkeit = Duration.ofDays(Long.parseLong(cakeData[4]));
-                            List<Allergen> allergene = null;
-                            if (!Objects.equals(cakeData[5], ",")) {
-                                allergene = this.parseAllergene(cakeData[5].split(","));
-                            }
-                            this.automat.addHersteller(hersteller.getName());
-                            boolean response = this.automat.create(
-                                    cakeData[0],
-                                    hersteller,
-                                    preis,
-                                    naehrwert,
-                                    haltbarkeit,
-                                    allergene,
-                                    (cakeData[0].equals("Obstkuchen") || cakeData[0].equals("Obsttorte")) ? cakeData[6] : null,
-                                    (cakeData[0].equals("Kremkuchen") || cakeData[0].equals("Obsttorte")) ? cakeData[7] : null
-                            );
-                            if (response){
-                                return "Kuchen wurde eingefügt!\n";
-                            }else{
-                                return "Irgendwas hat nicht funktioniert (Limit oder Kuchen war fehlerhaft)\n";
-                            }
-                        } catch (Exception e) {
-                            return this.printException(e, c.getMode());
-                        }
-                    }
+                    return this.console.createInputHandling(cakeData, this.automat);
                 }
                 case READ -> {
-                    try {
-                        if (cakeData[0].equals("all")) {
-                            StringBuilder return_string = new StringBuilder("Maximal " + this.automat.getAnzahlFaecher() + " Fächer\n");
-                            for (KuchenImp k : automat.readKuchen()) {
-                                return_string.append(k.toString()).append("\n");
-
-                            }
-                            return return_string.toString();
-                        } else {
-                            KuchenImp k = automat.readKuchen(Integer.parseInt(cakeData[0]));
-                            if (k != null) {
-                                return k.toString() + "\n";
-                            } else {
-                                return "Fachnummer " + cakeData[0] + " hat keinen Kuchen\n";
-                            }
-                        }
-                    } catch (Exception e) {
-                        this.printException(e, c.getMode());
-                    }
+                    return this.console.readInputHandling(cakeData, this.automat);
                 }
                 case UPDATE -> {
-                    try {
-                        if (this.automat.update(Integer.parseInt(cakeData[0]))) {
-                            return "Das Inspektionsdatum des Kuchen in Fachnummer: " + cakeData[0] + " wurde auf heute gesetzt.\n";
-                        } else {
-                            return "In Fachnummer: " + cakeData[0] + " befindet sich kein Kuchen.\n";
-                        }
-                    } catch (Exception e) {
-                        this.printException(e, c.getMode());
-                    }
+                    return this.console.updateInputHandling(cakeData, this.automat);
                 }
                 case DELETE -> {
-                    try {
-                        if (this.automat.delete(Integer.parseInt(cakeData[0]))) {
-                            return "Der Kuchen in Fachnummer: " + cakeData[0] + " wurde entfernt\n";
-                        } else {
-                            return "In Fachnummer: " + cakeData[0] + " befindet sich kein Kuchen.\n";
-                        }
-                    } catch (Exception e) {
-                        this.printException(e, c.getMode());
-                    }
+                    return this.console.deleteInputHandling(cakeData, this.automat);
                 }
                 case NOMODE -> {
                     return "No Mode selected\n";
