@@ -19,7 +19,7 @@ public class mainIO {
     private static final String[] herstellerListe = {"Jannik", "Xeni", "Foo", "Bar", "Tante Emma"};
     public static void main(String[] args) {
         verkaufsAutomat vk = new verkaufsAutomat(5);
-
+        Serializer s = new Serializer();
         vk.addHersteller("Jannik");
         vk.addHersteller("Xeni");
         vk.addHersteller("Foo");
@@ -32,9 +32,9 @@ public class mainIO {
         createKuchenRandom(vk, kuchenTyp[getRandomInt(0, kuchenTyp.length - 1)]);
         createKuchenRandom(vk, kuchenTyp[getRandomInt(0, kuchenTyp.length - 1)]);
 
-        Serializer.serializer("vk.txt", vk);
+        s.serializer("vk.txt", vk);
 
-        verkaufsAutomat vk2 = (verkaufsAutomat) Serializer.deserialize("vk.txt");
+        verkaufsAutomat vk2 = (verkaufsAutomat) s.deserialize("vk.txt");
         Collection<KuchenImp> lager = vk2.readKuchen();
         for (KuchenImp k : lager) {
             System.out.println(k);

@@ -4,9 +4,7 @@ import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.*;
 
-import kuchen.Obstkuchen;
 import kuchenImp.KuchenImp;
-import kuchenImp.ObstkuchenImp;
 import util.Command;
 import verwaltungsImp.HerstellerImp;
 import verwaltungsImp.verkaufsAutomat;
@@ -16,10 +14,21 @@ import io.Serializer;
 public class Console {
     private verkaufsAutomat automat;
     private boolean run;
+    private Command c;
+    private transient Serializer s;
     public Console(verkaufsAutomat automat){
+        this.c = new Command();
         this.automat=automat;
         this.run = true;
+        this.s = new Serializer();
     }
+    public Console(verkaufsAutomat automat, Serializer serializer){
+        this.c = new Command();
+        this.automat=automat;
+        this.run = true;
+        this.s = serializer;
+    }
+
     private List<Allergen> parseAllergene(String[] text){
         List<Allergen> allergene = new ArrayList<>();
         if (Objects.equals(text[0], "")){
@@ -51,25 +60,31 @@ public class Console {
         }
         return e.getMessage();
     }
-    private String performPersitance(String userInput){
-        switch (userInput) {
+    public String persitenceInputHandling(String[] cakeData){
+        if (cakeData.length == 2){
+            return this.performPersitance(cakeData[0], cakeData[1]);
+        }
+        return "Please Input: [saveJOS | loadJOS] [filename]";
+    }
+    private String performPersitance(String command, String filename){
+        switch (command) {
             case "saveJOS" -> {
-                Serializer.serializer("JOSvk.txt", this.automat);
+                this.s.serializer(filename, this.automat);
                 return "Saved with JOS";
             }
             case "loadJOS" -> {
-                this.automat = (verkaufsAutomat) Serializer.deserialize("JOSvk.txt");
+                this.automat = (verkaufsAutomat) this.s.deserialize(filename);
                 return "Loaded with JOS";
             }
             default -> {
-                return "no fitting Input [saveJOS, loadJOS, saveJBP, loadJBP]";
+                return "Please Input: [saveJOS | loadJOS] [filename]";
             }
         }
     }
-    public String createInputHandling(String[] cakeData, verkaufsAutomat automat){
+    public String createInputHandling(String[] cakeData){
         if (cakeData.length == 1) {
             HerstellerImp hersteller = new HerstellerImp(cakeData[0]);
-            boolean response = automat.addHersteller(hersteller.getName());
+            boolean response = this.automat.addHersteller(hersteller.getName());
             if (response){
                 return "Hersteller: " +  hersteller.getName() + " added!";
             }else{
@@ -86,7 +101,7 @@ public class Console {
                     allergene = this.parseAllergene(cakeData[5].split(","));
                 }
                 //this.automat.addHersteller(hersteller.getName());
-                boolean response = automat.create(
+                boolean response = this.automat.create(
                         cakeData[0],
                         hersteller,
                         preis,
@@ -108,12 +123,12 @@ public class Console {
         }
     }
 
-    public String readInputHandling(String[] cakeData, verkaufsAutomat automat){
+    public String readInputHandling(String[] cakeData){
         try {
             if (cakeData[0].contains("hersteller")) {
                 StringBuilder herstellerString = new StringBuilder();
                 herstellerString.append("Anzeige aller Hersteller mit Anzahl ihrer Kuchen:\n");
-                for(Map.Entry<String, Integer> entry : automat.getHerstellerMitKuchenAnzahl().entrySet()) {
+                for(Map.Entry<String, Integer> entry : this.automat.getHerstellerMitKuchenAnzahl().entrySet()) {
                     String hersteller = entry.getKey();
                     Integer anzahl = entry.getValue();
                     herstellerString.append(hersteller).append(": ").append(anzahl.toString()).append("\n");
@@ -121,13 +136,13 @@ public class Console {
                 return herstellerString.toString();
 
             } else if (cakeData[0].contains("kuchen")){
-                Collection<KuchenImp> kuchenListe = new ArrayList<KuchenImp>();
+                Collection<KuchenImp> kuchenListe = new ArrayList<>();
                 StringBuilder kuchenString = new StringBuilder();
                 if (cakeData.length > 1){
                     for (int i = 1; i < cakeData.length; i++ )
-                        kuchenListe.addAll(automat.readKuchen(cakeData[i]));
+                        kuchenListe.addAll(this.automat.readKuchen(cakeData[i]));
                 }else{
-                    kuchenListe.addAll(automat.readKuchen());
+                    kuchenListe.addAll(this.automat.readKuchen());
                 }
                 if (kuchenListe.size() != 0){
                     for (KuchenImp k : kuchenListe){
@@ -140,7 +155,7 @@ public class Console {
             } else if (cakeData[0].contains("allergene")) {
                 ArrayList<Allergen> allergeneList = new ArrayList<>();
                 StringBuilder allergeneString = new StringBuilder();
-                for (KuchenImp k: automat.readKuchen()){
+                for (KuchenImp k: this.automat.readKuchen()){
                     if (k.getAllergene() != null){
                         for (Allergen a: k.getAllergene()){
                             if (!allergeneList.contains(a)){
@@ -168,9 +183,9 @@ public class Console {
             return this.printException(e, Command.Mode.READ);
         }
     }
-    public String updateInputHandling(String[] cakeData, verkaufsAutomat automat){
+    public String updateInputHandling(String[] cakeData){
         try {
-            if (automat.update(Integer.parseInt(cakeData[0]))) {
+            if (this.automat.update(Integer.parseInt(cakeData[0]))) {
                 return "Das Inspektionsdatum des Kuchen in Fachnummer: " + cakeData[0] + " wurde auf heute gesetzt.";
             } else {
                 return "In Fachnummer: " + cakeData[0] + " befindet sich kein Kuchen.";
@@ -179,15 +194,15 @@ public class Console {
             return this.printException(e, Command.Mode.UPDATE);
         }
     }
-    public String deleteInputHandling(String[] cakeData, verkaufsAutomat automat){
+    public String deleteInputHandling(String[] cakeData){
         try {
-            if (automat.delete(Integer.parseInt(cakeData[0]))) {
+            if (this.automat.delete(Integer.parseInt(cakeData[0]))) {
                 return "Der Kuchen in Fachnummer: " + cakeData[0] + " wurde entfernt.";
             } else {
                 return "In Fachnummer: " + cakeData[0] + " befindet sich kein Kuchen.";
             }
         } catch (NumberFormatException e) {
-            if (automat.deleteHersteller(cakeData[0])){
+            if (this.automat.deleteHersteller(cakeData[0])){
                 return "Der Hersteller: " + cakeData[0] + " wurde gelöscht.";
             }else{
                 return "Der Hersteller: " + cakeData[0] + " existiert nicht.";
@@ -196,39 +211,44 @@ public class Console {
             return this.printException(e, Command.Mode.DELETE);
         }
     }
+    public String inputHandling (String input){
+        if (input.startsWith(":")){
+            if (input.startsWith(":e")){
+                this.run = false;
+            }
+            return this.c.nextCommand(input);
+        }else{
+
+            String[] cakeData = input.split(" ");
+            switch (this.c.getMode()) {
+                case CREATE -> { //Obstkuchen Alice 4,50 386 36 Gluten,Erdnuss Apfel
+                    return this.createInputHandling(cakeData);
+                }
+                case READ -> {
+                    return this.readInputHandling(cakeData);
+                }
+                case UPDATE -> {
+                    return this.updateInputHandling(cakeData);
+                }
+                case DELETE -> {
+                    return this.deleteInputHandling(cakeData);
+                }
+                case PERSIST -> {
+                    return this.persitenceInputHandling(cakeData);
+                }
+                default -> {
+                    return "No Mode selected";
+                }
+            }
+        }
+    }
     public void execute() {
         try (Scanner s = new Scanner(System.in)) {
-            Command c = new Command();
 
             while (this.run){
                 System.out.println(c.getMode() + " -- What do you want to do?:");
                 String input = s.nextLine();
-                if (input.startsWith(":")){
-                    System.out.println(c.nextCommand(input));
-                    if (input.startsWith(":e")){
-                        this.run = false;
-                    }
-                }else{
-                    String[] cakeData = input.split(" ");
-                    switch (c.getMode()) {
-                        case CREATE -> { //Obstkuchen Alice 4,50 386 36 Gluten,Erdnuss Apfel
-                            System.out.println(this.createInputHandling(cakeData, this.automat));
-                        }
-                        case READ -> {
-                            System.out.println(this.readInputHandling(cakeData, this.automat));
-                        }
-                        case UPDATE -> {
-                            System.out.println(this.updateInputHandling(cakeData, this.automat));
-                        }
-                        case DELETE -> {
-                            System.out.println(this.deleteInputHandling(cakeData, this.automat));
-                        }
-                        case PERSIST -> {
-                            System.out.println(this.performPersitance(cakeData[0]));
-                        }
-                        case NOMODE -> System.out.println("No Mode selected");
-                    }
-                }
+                System.out.println(inputHandling(input));
             }
         }
     }

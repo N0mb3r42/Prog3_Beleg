@@ -1,22 +1,11 @@
 package tcp;
 
 import java.io.*;
-import java.math.BigDecimal;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-import kuchen.Obstkuchen;
-import kuchenImp.KuchenImp;
-import kuchenImp.ObstkuchenImp;
 import util.Command;
-import verwaltungsImp.HerstellerImp;
 import verwaltungsImp.verkaufsAutomat;
-import kuchen.Allergen;
 import viewControl.Console;
 
 
@@ -31,46 +20,6 @@ public class Server{
         this.automat = new verkaufsAutomat(kapazitaet);
         this.c = new Command();
         this.console = new Console(this.automat);
-    }
-    private String printException(Exception e, Command.Mode mode){
-        switch (mode) {
-            case CREATE -> {
-                return "Fehlerhafte Eingabe " + e.getMessage() + "\nInput sollte Format: [String] [String] [Decimal] [Integer] [Integer] [String, String] [String] haben";
-            }
-            case READ -> {
-                return "Fehlerhafte Eingabe " + e.getMessage() + "\nInput sollte entweder 'all' oder [Integer] sein";
-            }
-            case UPDATE, DELETE -> {
-                return "Fehlerhafte Eingabe " + e.getMessage() + "\nInput sollte Format: [integer] haben";
-            }
-        }
-        return null;
-    }
-    private String command_handling(String input) {
-        if (input.startsWith(":")){
-            return c.nextCommand(input);
-        }else{
-            String[] cakeData = input.split(" ");
-            System.out.println(cakeData);
-            switch (c.getMode()) {
-                case CREATE -> { //Obstkuchen Alice 4,50 386 36 Gluten,Erdnuss Apfel
-                    return this.console.createInputHandling(cakeData, this.automat);
-                }
-                case READ -> {
-                    return this.console.readInputHandling(cakeData, this.automat);
-                }
-                case UPDATE -> {
-                    return this.console.updateInputHandling(cakeData, this.automat);
-                }
-                case DELETE -> {
-                    return this.console.deleteInputHandling(cakeData, this.automat);
-                }
-                case NOMODE -> {
-                    return "No Mode selected\n";
-                }
-            }
-        }
-        return null;
     }
 
     private String checkForExit(String input) {
@@ -91,7 +40,7 @@ public class Server{
                     while (true) {
                         String input = in.readUTF();
                         System.out.println("recieved: " + input);
-                        String return_value = command_handling(input);
+                        String return_value = this.console.inputHandling(input);
                         if (return_value != null){
                             out.writeUTF(return_value);
                         }

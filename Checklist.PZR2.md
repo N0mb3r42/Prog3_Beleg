@@ -23,20 +23,20 @@ Ergänzende Anmerkungen bitte immer _kursiv_ setzen. Andere Änderungen sind nic
 - [x] **Paketierung** (2)
 - [x] Schichtenaufteilung (2)
 - [ ] Architekturdiagramm (1)
-- [ ] keine Duplikate (1)
+- [x] keine Duplikate (1)
 
 ## Tests (28)
 - [x] **Testqualität** (7)
 - [x] **Testabdeckung GL (inkl. Abhängigkeiten)** (7) _100%_
 - [ ] Testabdeckung Rest (6)
-  - [ ] Einfügen von Kund*innen über das CLI _getestete Klassen angeben_
-  - [ ] Anzeigen von Kund*innen über das CLI _getestete Klassen angeben_
+  - [x] Einfügen von Kund*innen über das CLI _Console.java_
+  - [x] Anzeigen von Kund*innen über das CLI _Console.java_
   - [ ] ein Beobachter _getestete Klassen angeben_
   - [ ] deterministische Funktionalität der Simulationen _getestete Klassen angeben_
-  - [ ] Speichern via JOS oder JBP _getestete Klassen angeben_
-  - [ ] Laden via JOS oder JBP _getestete Klassen angeben_
-- [ ] **mindestens 5 Unittests, die Mockito verwenden** (4)
-- [ ] mindestens 4 Spy- / Verhaltens-Tests (3)
+  - [x] Speichern via JOS oder JBP _Console.java_
+  - [x] Laden via JOS oder JBP _Console.java_
+- [x] **mindestens 5 Unittests, die Mockito verwenden** (4)
+- [x] mindestens 4 Spy- / Verhaltens-Tests (3)
 - [x] **keine unbeabsichtigt fehlschlagenden Test** (1)
 
 ## Fehlerfreiheit (10)
@@ -62,7 +62,7 @@ Ergänzende Anmerkungen bitte immer _kursiv_ setzen. Andere Änderungen sind nic
   * _angeben welche Funktionalität im alternativen CLI deaktiviert_
 - [ ] ausdifferenziertes event-System mit mindestens 3 events (2)
 - [ ] observer (2)
-- [ ] angemessene Aufzählungstypen (2)
+- [x] angemessene Aufzählungstypen (2)
 - [ ] Simulation 2 (1)
 - [ ] Simulation 3 (1)
 - [ ] skalierbare GUI (1)
